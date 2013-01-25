@@ -5,4 +5,9 @@
 *.war
 *.ear
 
-.DS_Store
+*.DS_Store
+
+Workspace/.metadata/
+Workspace/Spillet/.classpath
+Workspace/Spillet/.project
+Workspace/Spillet/.settings/
