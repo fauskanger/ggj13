@@ -1,6 +1,6 @@
 package no.troll;
 
-public class main {
+public class Program {
 
 	/**
 	 * @param args
