@@ -1,3 +1,5 @@
+
+
 package no.troll;
 
 
@@ -5,11 +7,13 @@ import java.util.HashMap;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class Resources {
 	
 	public enum TileImageName {Dirt1, Dirt2, Dirt3, Grass1, Grass2, Grass3};
 	public enum BrickImageName {Wall, Fjell};
+
 	public enum CharacterImageName { Virgin,
 									 Virgin_STILL, 
 									 Virgin_UP_1,
@@ -38,6 +42,9 @@ public class Resources {
 									 Virgin_DOWNRIGHT_3,
 									 Troll };
 
+	public enum SoundName {Theme,Sword};
+
+	private HashMap<SoundName,Sound> SoundMap;
 	private HashMap<TileImageName, Image> tileImageMap;
 	private HashMap<BrickImageName, Image> brickImageMap;
 	private HashMap<BrickImageName, Integer> brickSizes;
@@ -57,12 +64,41 @@ public class Resources {
 		brickSizes = new HashMap<Resources.BrickImageName, Integer>();
 		tileImageNames = TileImageName.values();
 		brickImageNames = BrickImageName.values();
-		
+		SoundMap = new HashMap<Resources.SoundName,Sound>();
+
+		loadSound();
 		loadTiles();
 		loadBricks();
 		loadCharacters();
 	}
 	
+	private void loadSound() 
+	{	
+		addSound("GGJ13_Theme.wav",SoundName.Theme);
+		addSound("Sword.wav",SoundName.Sword);
+		
+	}
+
+	
+	private void addSound(String fileName, SoundName SName) 
+	{
+		String location = base_path + "sound/" + fileName;
+		try{
+			SoundMap.put(SName, new Sound(location));
+		}catch (SlickException e){
+			e.printStackTrace();
+			System.out.println("ERROR: no sounds at location: " + location);
+		}
+		
+	}
+
+	
+
+	public Sound getSound(SoundName SName)
+	{
+		return SoundMap.get(SName);
+	}
+
 	private void loadTiles() {
 		addTile("DirtTileMal.png", TileImageName.Dirt1);
 		addTile("DirtTileMal2.png", TileImageName.Dirt2);

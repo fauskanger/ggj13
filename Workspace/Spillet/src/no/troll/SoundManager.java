@@ -1,33 +1,26 @@
 package no.troll;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import no.troll.Resources.SoundName;
+
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 public class SoundManager 
 {
-	private String SoundPath = "res/sound";
-	public enum SoundName{Theme,sword};
-	private HashMap<SoundName, Sound> SoundList;
+	private Resources resources;
+	private ArrayList<Sound> SoundList;
 	
-	public SoundManager()
+	public SoundManager(Resources resources)
 	{
-		SoundList = new HashMap<SoundManager.SoundName, Sound>();
-		addSound("GGJ13_Theme.wav", SoundName.Theme);
-		addSound("Sword.wav", SoundName.sword);
+		this.resources=resources;
+			
+		Sound fx = resources.getSound(SoundName.Theme);
+		
+		fx.play(1.0f,1.0f);
 	}
 	
-	private void addSound(String fileName, SoundName tileName) {
-		try {
-			SoundList.put(tileName, new Sound(SoundPath + fileName));
-		} catch (SlickException e) {
-			e.printStackTrace();
-			System.out.println("ERROR: no sound at location: " + fileName);
-		}
-	}
 	
-	public Sound getSound(SoundName tileName) {
-		return SoundList.get(tileName);
-	}
-
 }

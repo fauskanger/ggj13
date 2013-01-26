@@ -34,6 +34,8 @@ public class Program extends BasicGame {
 	private ArrayList<Drawable> bricks;
 	private ArrayList<Drawable> mobs;
 	
+
+	private SoundManager noe;
 	
 	public Program() {
 		super("Spillet");
@@ -74,6 +76,8 @@ public class Program extends BasicGame {
 		bricks.add(wall);
 		drawables.add(fjell);
 		bricks.add(fjell);
+
+		noe = new SoundManager(resources); 
 	}
 
 	@Override
