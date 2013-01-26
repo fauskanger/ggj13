@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import no.troll.Resources.CharacterImageName;
+import no.troll.Resources.SoundName;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Transform;
+
 
 public class Virgin implements Drawable {
 
@@ -24,6 +27,10 @@ public class Virgin implements Drawable {
 
 	private HashMap<MoveDirection, Image[]> images;	
 	private Resources resources;
+
+	private boolean attack = false; 
+	private SoundManager Lyd; 
+
 
 	private int timePerSpriteLoop; // in msec
 	private int deltaTimeSpriteLoop; // in msec
@@ -130,11 +137,13 @@ public class Virgin implements Drawable {
 	}
 
 	public void draw(Graphics g) {
+
 		//		g.drawImage(image, getScreenPos().x, getScreenPos().y);
 
 
 		drawTileLines(g);
 		//		System.out.println("Koza: " + currentMoveDirection + " " + currentSpriteFrame);
+
 		Image i = images.get(currentMoveDirection)[currentSpriteFrame];
 		g.drawImage(i, posX-25, posY+10);
 
@@ -156,12 +165,29 @@ public class Virgin implements Drawable {
 	public void update(int delta, Pair delta_pos) {
 	}
 
-	//	private Pair getScreenPos() {
-	//	    int retX = posX * (Program.tileWidth / 2) + posY * -Program.tileHeight;
-	//	    int retY = posX * (Program.tileHeight / 2) + posY * (Program.tileHeight / 2); 		
-	//		return new Pair(retX, retY);
-	//		
-	//	}
+
+//	private Pair getScreenPos() {
+//	    int retX = posX * (Program.tileWidth / 2) + posY * -Program.tileHeight;
+//	    int retY = posX * (Program.tileHeight / 2) + posY * (Program.tileHeight / 2); 		
+//		return new Pair(retX, retY);
+//		
+//	}
+	
+	public void attack(Input input)
+	{		
+		if(input.isKeyDown(Input.KEY_X))
+		{
+			attack = true;
+			
+			Sound att = resources.getSound(SoundName.Sword); 
+			if(!att.playing())
+			{
+				att.play(1.0f,0.2f);
+			}
+			//Bilde av angrep
+			
+		}
+	}
 
 	public Pair update(int delta, Input input) {
 		int pixels_per_sec = 150;
@@ -174,6 +200,8 @@ public class Virgin implements Drawable {
 		boolean moveLeft = false;
 		boolean moveRight = false;
 
+		attack(input);
+	
 		if (input.isKeyDown(Input.KEY_UP)) {
 			moveUp = true;
 			buttons++;

@@ -33,7 +33,6 @@ public class Program extends BasicGame {
 	private ArrayList<Drawable> drawables;
 	private ArrayList<Brick> bricks;
 	private ArrayList<Drawable> mobs;
-	
 
 	private SoundManager noe;
 	
@@ -76,7 +75,6 @@ public class Program extends BasicGame {
 		bricks.add(wall);
 		drawables.add(fjell);
 		bricks.add(fjell);
-
 		noe = new SoundManager(resources); 
 	}
 

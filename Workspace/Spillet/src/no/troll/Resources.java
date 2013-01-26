@@ -3,6 +3,7 @@
 package no.troll;
 
 
+import java.net.URL;
 import java.util.HashMap;
 
 import org.newdawn.slick.Image;
@@ -91,8 +92,6 @@ public class Resources {
 		}
 		
 	}
-
-	
 
 	public Sound getSound(SoundName SName)
 	{
