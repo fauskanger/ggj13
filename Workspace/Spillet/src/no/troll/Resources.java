@@ -11,7 +11,7 @@ import org.newdawn.slick.Sound;
 
 public class Resources {
 	
-	public enum TileImageName {Dirt1, Dirt2, Dirt3, Grass1, Grass2, Grass3};
+	public enum TileImageName {Dirt1, Dirt2, Dirt3, Grass1, Grass2, Grass3, Grass4, Grass5};
 	public enum BrickImageName {Wall, Fjell};
 
 	public enum CharacterImageName { Virgin,
@@ -106,6 +106,8 @@ public class Resources {
 		addTile("GressTile01.png", TileImageName.Grass1);
 		addTile("GressTile02.png", TileImageName.Grass2);
 		addTile("GressTile03.png", TileImageName.Grass3);
+		addTile("GressTile04.png", TileImageName.Grass4);
+		addTile("GressTile05.png", TileImageName.Grass5);
 	}
 
 	private void loadCharacters() {

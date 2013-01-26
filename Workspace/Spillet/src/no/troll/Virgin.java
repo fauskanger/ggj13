@@ -9,7 +9,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Polygon;
-import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Transform;
 
 public class Virgin implements Drawable {
@@ -150,6 +149,7 @@ public class Virgin implements Drawable {
 	public void updatePosition(int delta_x, int delta_y) {
 		this.posX += delta_x;
 		this.posY += delta_y;
+		translatePolygon(delta_x, delta_y);
 	}
 
 	@Override
@@ -230,34 +230,42 @@ public class Virgin implements Drawable {
 		
 		posX += moveX;
 		posY += moveY;
-
-		
-		
-		collisionDetection(currentMoveDirection);
-
 		
 
 		int correctX = 0;
 		int correctY = 0;
-		if (posY < freeZoneTop) {
-			correctY = freeZoneTop - posY;
-		}
-		if (posY > freeZoneBottom) {
-			correctY = freeZoneBottom - posY;
-		}
-		if (posX < freeZoneLeft) {
-			correctX = freeZoneLeft - posX;
-		}
-		if (posX > freeZoneRight) {
-			correctX = freeZoneRight - posX;
-		}
-		posX += correctX;
-		posY += correctY;
 		
+		if (!collisionDetection(currentMoveDirection)) {			
 
-		shape = (Polygon) shape.transform(Transform.createTranslateTransform(moveX+correctX, moveY+correctY));
-		
+			if (posY < freeZoneTop) {
+				correctY = freeZoneTop - posY;
+			}
+			if (posY > freeZoneBottom) {
+				correctY = freeZoneBottom - posY;
+			}
+			if (posX < freeZoneLeft) {
+				correctX = freeZoneLeft - posX;
+			}
+			if (posX > freeZoneRight) {
+				correctX = freeZoneRight - posX;
+			}
+			posX += correctX;
+			posY += correctY;
+			
+			
+			translatePolygon(moveX+correctX, moveY+correctY);
+		}
+		else
+		{
+			posX -= moveX;
+			posY -= moveY;
+		}
+	
 		return new Pair(correctX, correctY);
+	}
+	
+	private void translatePolygon(int moveX, int moveY) {
+		shape = (Polygon) shape.transform(Transform.createTranslateTransform(moveX, moveY));
 	}
 
 	private MoveDirection getCurrentMoveDirection(boolean moveUp, boolean moveDown,	boolean moveLeft, boolean moveRight) {
@@ -293,12 +301,14 @@ public class Virgin implements Drawable {
 		return new Pair(posX, posY + images.get(MoveDirection.STILL)[0].getHeight());
 	}
 
-	void collisionDetection(MoveDirection moveDirection) {
+	boolean collisionDetection(MoveDirection moveDirection) {
 		for(Brick b: fixedObjects) {
 			if(b.shape.intersects(shape)) {
-				System.out.println("COLLISION!!");
+				System.out.println("COLLISION!");
+				return true;
 			}
 		}
+		return false;
 	}
 
 
