@@ -17,10 +17,10 @@ public class Program extends BasicGame {
 
 	static private final int windowWidth = 1024;
 	static private final int windowHeight = 768;
-	static private final int freeZoneTop = 200;
+	static private final int freeZoneTop = 300;
 	static private final int freeZoneLeft = 200;
-	static private final int freeZoneRight = windowWidth - 200;
-	static private final int freeZoneBottom = windowHeight - 200;
+	static private final int freeZoneRight = windowWidth - 250;
+	static private final int freeZoneBottom = windowHeight - 350;
 
 	
 	static final public int tileWidth = 100;

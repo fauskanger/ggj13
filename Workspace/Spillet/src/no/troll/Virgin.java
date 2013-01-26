@@ -204,21 +204,42 @@ public class Virgin implements Drawable {
 
 		attack(input);
 	
-		if (input.isKeyDown(Input.KEY_UP)) {
-			moveUp = true;
-			buttons++;
-		}
-		if (input.isKeyDown(Input.KEY_DOWN)) {
-			moveDown = true;
-			buttons++;
-		}
-		if (input.isKeyDown(Input.KEY_LEFT)) {
+		if (input.isKeyDown(Input.KEY_UP) && input.isKeyDown(Input.KEY_LEFT)) {
 			moveLeft = true;
-			buttons++;
+			buttons = 1;
 		}
-		if (input.isKeyDown(Input.KEY_RIGHT)) {
+		else if (input.isKeyDown(Input.KEY_DOWN) && input.isKeyDown(Input.KEY_RIGHT)) {
 			moveRight = true;
-			buttons++;
+			buttons = 1;
+		}
+		else if (input.isKeyDown(Input.KEY_DOWN) && input.isKeyDown(Input.KEY_LEFT)) {
+			moveDown = true;
+			buttons = 1;
+		}
+		else if (input.isKeyDown(Input.KEY_UP) && input.isKeyDown(Input.KEY_RIGHT)) {
+			moveUp = true;
+			buttons = 1;
+		}
+
+		else if (input.isKeyDown(Input.KEY_UP)) {
+			moveUp = true;
+			moveLeft = true;
+			buttons = 2;
+		}
+		else if (input.isKeyDown(Input.KEY_DOWN)) {
+			moveDown = true;
+			moveRight = true;
+			buttons = 2;
+		}
+		else if (input.isKeyDown(Input.KEY_LEFT)) {
+			moveLeft = true;
+			moveDown = true;
+			buttons = 2;
+		}
+		else if (input.isKeyDown(Input.KEY_RIGHT)) {
+			moveRight = true;
+			moveUp = true;
+			buttons = 2;
 		}
 
 		currentMoveDirection = getCurrentMoveDirection(moveUp, moveDown, moveLeft, moveRight);
