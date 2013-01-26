@@ -1,5 +1,6 @@
 package no.troll;
 
+
 import java.util.HashMap;
 
 import org.newdawn.slick.Image;
@@ -111,5 +112,7 @@ public class Resources {
 	public Image getCharacter(CharacterImageName imageName) {
 		return characterImageMap.get(imageName);
 	}
+	
+	
 
 }
