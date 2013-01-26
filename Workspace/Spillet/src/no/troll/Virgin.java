@@ -114,7 +114,7 @@ public class Virgin implements Drawable {
 
 
 		drawTileLines(g);
-		System.out.println("Koza: " + currentMoveDirection + " " + currentSpriteFrame);
+//		System.out.println("Koza: " + currentMoveDirection + " " + currentSpriteFrame);
 		Image i = images.get(currentMoveDirection)[currentSpriteFrame];
 		g.drawImage(i, posX, posY);
 
@@ -277,10 +277,6 @@ public class Virgin implements Drawable {
 	}
 
 	void collisionDetection(MoveDirection moveDirection) {
-		if(moveDirection == null)
-			return;
-
-
 		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
 		int topY = bottomY - Program.tileHeight;
 		int leftY = bottomY - Program.tileHeight/2;
