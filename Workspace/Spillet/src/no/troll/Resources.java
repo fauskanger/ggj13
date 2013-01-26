@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 
 public class Resources {
 	
-	public enum TileImageName {Dirt1, Dirt2, Dirt3};
+	public enum TileImageName {Dirt1, Dirt2, Dirt3, Grass1, Grass2, Grass3};
 	public enum BrickImageName {Wall, Fjell};
 	public enum CharacterImageName {Virgin, Troll};
 
@@ -40,6 +40,9 @@ public class Resources {
 		addTile("DirtTileMal.png", TileImageName.Dirt1);
 		addTile("DirtTileMal2.png", TileImageName.Dirt2);
 		addTile("DirtTileMal3.png", TileImageName.Dirt3);
+		addTile("GressTile01.png", TileImageName.Grass1);
+		addTile("GressTile02.png", TileImageName.Grass2);
+		addTile("GressTile03.png", TileImageName.Grass3);
 	}
 
 	private void loadCharacters() {

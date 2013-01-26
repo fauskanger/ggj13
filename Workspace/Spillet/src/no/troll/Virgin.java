@@ -8,6 +8,7 @@ import org.newdawn.slick.Input;
 
 public class Virgin implements Drawable {
 	
+	private enum MoveDirection {UP, DOWN, LEFT, RIGHT, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT};
 	private int posX;
 	private int posY;
 	private double delta_posX;
@@ -69,6 +70,7 @@ public class Virgin implements Drawable {
 		boolean moveDown = false;
 		boolean moveLeft = false;
 		boolean moveRight = false;
+	
 		if (input.isKeyDown(Input.KEY_UP)) {
 			moveUp = true;
 			buttons++;
@@ -114,7 +116,12 @@ public class Virgin implements Drawable {
 		delta_posY -= moveY;
 		posX += moveX;
 		posY += moveY;
+
+		MoveDirection currentMoveDirection = getCurrentMoveDirection(moveUp, moveDown, moveLeft, moveRight);
 		
+		collisionDetection(currentMoveDirection);
+		
+				
 		int correctX = 0;
 		int correctY = 0;
 		if (posY < freeZoneTop) {
@@ -132,12 +139,20 @@ public class Virgin implements Drawable {
 		posX += correctX;
 		posY += correctY;
 		return new Pair(correctX, correctY);
-		
+	}
+
+	private MoveDirection getCurrentMoveDirection(boolean moveUp, boolean moveDown,	boolean moveLeft, boolean moveRight) {
+	
+		return null;
 	}
 
 	@Override
 	public Pair getZ() {
 		return new Pair(posX, posY + image.getHeight());
+	}
+	
+	void collisionDetection(MoveDirection moveDirection) {
+		
 	}
 
 	
