@@ -1,5 +1,6 @@
 package no.troll;
 
+
 import java.util.HashMap;
 
 import org.newdawn.slick.Image;
@@ -9,7 +10,7 @@ public class Resources {
 	
 	public enum TileImageName {Dirt1, Dirt2, Dirt3, RockBlock};
 	public enum ImageName {Wall};
-
+	
 	private HashMap<TileImageName, Image> tileImageMap;
 	private HashMap<ImageName, Image> imageMap;
 	private TileImageName[] tileImageNames;
@@ -71,5 +72,7 @@ public class Resources {
 	public Image getImage(ImageName imageName) {
 		return imageMap.get(imageName);
 	}
+	
+	
 
 }

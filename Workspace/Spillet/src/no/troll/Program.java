@@ -1,7 +1,6 @@
 package no.troll;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -13,6 +12,8 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.Audio;
 
 public class Program extends BasicGame {
 
@@ -70,6 +71,10 @@ public class Program extends BasicGame {
 		Drawable wall = new Wall(resources.getImage(ImageName.Wall), 500, 300);
 		drawables.add(wall);
 		fixedObjects.add(wall);
+		
+//		Sound s = new Sound("res/sound/GGJ13_Theme.wav");
+//		s.play();
+		
 	}
 
 	@Override
