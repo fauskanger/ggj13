@@ -1,5 +1,7 @@
 package no.troll;
 
+import no.troll.TileImages.TileImageName;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -14,8 +16,11 @@ public class Program extends BasicGame {
 	static private int tileWidth = 100;
 	static private int tileHeight = 50;
 	
+	private TileImages tileImages;
+	
 	public Program() {
 		super("Spillet");
+		tileImages = new TileImages();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -67,6 +72,7 @@ public class Program extends BasicGame {
 		int tileColumns = width / tileWidth + 1;
 		int tileRows = (height / tileHeight + 1) * 2;
 		makeTileGrid(g, -50, -25, tileColumns, tileRows);
+		g.drawImage(tileImages.getTileImage(TileImageName.Dirt1), 20, 20);
 	}
 
 	@Override
