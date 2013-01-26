@@ -52,9 +52,6 @@ public class Virgin implements Drawable {
 		timePerSpriteLoop = 500;
 		deltaTimeSpriteLoop = 0;
 		
-		
-		
-
 		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
 		int topY = bottomY - Program.tileHeight;
 		int leftY = bottomY - Program.tileHeight/2;
