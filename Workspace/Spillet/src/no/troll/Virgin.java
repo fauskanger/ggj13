@@ -52,7 +52,9 @@ public class Virgin implements Drawable {
 		timePerSpriteLoop = 500;
 		deltaTimeSpriteLoop = 0;
 		
+
 		
+		addImages();
 		
 
 		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
@@ -67,10 +69,8 @@ public class Virgin implements Drawable {
 		shape = new Polygon();
 		shape.addPoint(bottomX, bottomY);
 		shape.addPoint(rightX, rightY);
-		shape.addPoint(leftX, leftY);
 		shape.addPoint(topX, topY);
-		
-		addImages();
+		shape.addPoint(leftX, leftY);
 
 
 		freeZoneTop = freeZone[0];
@@ -229,11 +229,16 @@ public class Virgin implements Drawable {
 		int moveY = (int) delta_posY;
 		delta_posX -= moveX;
 		delta_posY -= moveY;
+		
+		
 		posX += moveX;
 		posY += moveY;
 
+		
+		
 		collisionDetection(currentMoveDirection);
 
+		
 
 		int correctX = 0;
 		int correctY = 0;
@@ -251,6 +256,10 @@ public class Virgin implements Drawable {
 		}
 		posX += correctX;
 		posY += correctY;
+		
+
+		shape = (Polygon) shape.transform(Transform.createTranslateTransform(moveX+correctX, moveY+correctY));
+		
 		return new Pair(correctX, correctY);
 	}
 
@@ -288,7 +297,11 @@ public class Virgin implements Drawable {
 	}
 
 	void collisionDetection(MoveDirection moveDirection) {
-		
+		for(Brick b: fixedObjects) {
+			if(b.shape.intersects(shape)) {
+				System.out.println("COLLISION!!");
+			}
+		}
 	}
 
 
