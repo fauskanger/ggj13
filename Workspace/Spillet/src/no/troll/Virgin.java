@@ -256,8 +256,9 @@ public class Virgin implements Drawable {
 		delta_posY -= moveY;
 		
 		
-		posX += moveX;
-		posY += moveY;
+//		posX += moveX;
+//		posY += moveY;
+		updatePosition(moveX, moveY);
 		
 
 		int correctX = 0;
@@ -277,16 +278,19 @@ public class Virgin implements Drawable {
 			if (posX > freeZoneRight) {
 				correctX = freeZoneRight - posX;
 			}
-			posX += correctX;
-			posY += correctY;
+//			posX += correctX;
+//			posY += correctY;
+			
+			updatePosition(correctX, correctY);
 			
 			
-			translatePolygon(moveX+correctX, moveY+correctY);
+//			translatePolygon(moveX+correctX, moveY+correctY);
 		}
 		else
 		{
-			posX -= moveX;
-			posY -= moveY;
+//			posX -= moveX;
+//			posY -= moveY;
+			updatePosition(-moveX, -moveY);
 		}
 	
 		return new Pair(correctX, correctY);
