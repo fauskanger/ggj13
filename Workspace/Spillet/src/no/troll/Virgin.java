@@ -146,7 +146,6 @@ public class Virgin implements Drawable {
 	}
 
 	private void drawTileLines(Graphics g) {
-
 		g.draw(shape);
 	}
 
@@ -289,20 +288,7 @@ public class Virgin implements Drawable {
 	}
 
 	void collisionDetection(MoveDirection moveDirection) {
-		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
-		int topY = bottomY - Program.tileHeight;
-		int leftY = bottomY - Program.tileHeight/2;
-
-		switch (moveDirection) {
-
-		case UPLEFT:
-			for(Brick b: fixedObjects) {
-
-			}
-			break;
-		default:
-			break;
-		}
+		
 	}
 
 
