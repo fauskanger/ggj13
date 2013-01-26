@@ -5,17 +5,20 @@ import java.util.HashMap;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class Resources {
 	
 	public enum TileImageName {Dirt1, Dirt2, Dirt3};
 	public enum BrickImageName {Wall, Fjell};
 	public enum CharacterImageName {Virgin, Troll};
+	public enum SoundName {Theme,Sword};
 
 	private HashMap<TileImageName, Image> tileImageMap;
 	private HashMap<BrickImageName, Image> brickImageMap;
 	private HashMap<BrickImageName, Integer> brickSizes;
 	private HashMap<CharacterImageName, Image> characterImageMap;
+	private HashMap<SoundName,Sound> SoundMap;
 	
 	private TileImageName[] tileImageNames;
 	private BrickImageName[] brickImageNames;
@@ -29,14 +32,24 @@ public class Resources {
 		brickImageMap = new HashMap<Resources.BrickImageName, Image>();
 		characterImageMap = new HashMap<Resources.CharacterImageName, Image>();
 		brickSizes = new HashMap<Resources.BrickImageName, Integer>();
+		SoundMap = new HashMap<Resources.SoundName,Sound>();
+		
 		tileImageNames = TileImageName.values();
 		brickImageNames = BrickImageName.values();
 		
 		loadTiles();
 		loadBricks();
 		loadCharacters();
+		loadSound();
 	}
 	
+	private void loadSound() 
+	{	
+		addSound("GGJ13_Theme.wav",SoundName.Theme);
+		addSound("Sword.wav",SoundName.Sword);
+		
+	}
+
 	private void loadTiles() {
 		addTile("DirtTileMal.png", TileImageName.Dirt1);
 		addTile("DirtTileMal2.png", TileImageName.Dirt2);
@@ -51,6 +64,18 @@ public class Resources {
 	private void loadBricks() {
 		addBrick("Wall.png", BrickImageName.Wall, 50);
 		addBrick("Fjell.png", BrickImageName.Fjell, 100);
+	}
+	
+	private void addSound(String fileName, SoundName SName) 
+	{
+		String location = base_path + "sound/" + fileName;
+		try{
+			SoundMap.put(SName, new Sound(location));
+		}catch (SlickException e){
+			e.printStackTrace();
+			System.out.println("ERROR: no sounds at location: " + location);
+		}
+		
 	}
 
 	private void addCharacter(String fileName, CharacterImageName imageName) {
@@ -110,6 +135,9 @@ public class Resources {
 		return characterImageMap.get(imageName);
 	}
 	
-	
+	public Sound getSound(SoundName SName)
+	{
+		return SoundMap.get(SName);
+	}
 
 }

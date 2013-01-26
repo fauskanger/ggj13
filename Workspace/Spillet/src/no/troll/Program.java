@@ -6,6 +6,7 @@ import java.util.Comparator;
 
 import no.troll.Resources.BrickImageName;
 import no.troll.Resources.CharacterImageName;
+import no.troll.Resources.SoundName;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -13,6 +14,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+
 
 public class Program extends BasicGame {
 
@@ -34,7 +36,7 @@ public class Program extends BasicGame {
 	private ArrayList<Drawable> drawables;
 	private ArrayList<Drawable> bricks;
 	private ArrayList<Drawable> mobs;
-	
+	private SoundManager noe;
 	
 	public Program() {
 		super("Spillet");
@@ -75,6 +77,7 @@ public class Program extends BasicGame {
 		bricks.add(wall);
 		drawables.add(fjell);
 		bricks.add(fjell);
+		noe = new SoundManager(resources); 
 	}
 
 	@Override
