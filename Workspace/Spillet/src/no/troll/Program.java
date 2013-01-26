@@ -13,10 +13,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
-<<<<<<< HEAD
-import org.newdawn.slick.openal.Audio;
-=======
->>>>>>> 674206d914c48bfe9ded830ccb1422537ac1b518
 
 public class Program extends BasicGame {
 
@@ -76,17 +72,9 @@ public class Program extends BasicGame {
 		Drawable wall = new Brick(resources.getBrick(BrickImageName.Wall), 600, 300, resources.getBrickXPosForZ(BrickImageName.Wall));
 		Drawable fjell = new Brick(resources.getBrick(BrickImageName.Fjell), 300, 150, resources.getBrickXPosForZ(BrickImageName.Fjell));
 		drawables.add(wall);
-<<<<<<< HEAD
-		fixedObjects.add(wall);
-		
-//		Sound s = new Sound("res/sound/GGJ13_Theme.wav");
-//		s.play();
-		
-=======
 		bricks.add(wall);
 		drawables.add(fjell);
 		bricks.add(fjell);
->>>>>>> 674206d914c48bfe9ded830ccb1422537ac1b518
 	}
 
 	@Override

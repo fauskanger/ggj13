@@ -8,16 +8,10 @@ import org.newdawn.slick.SlickException;
 
 public class Resources {
 	
-<<<<<<< HEAD
-	public enum TileImageName {Dirt1, Dirt2, Dirt3, RockBlock};
-	public enum ImageName {Wall};
-	
-=======
 	public enum TileImageName {Dirt1, Dirt2, Dirt3};
 	public enum BrickImageName {Wall, Fjell};
 	public enum CharacterImageName {Virgin, Troll};
 
->>>>>>> 674206d914c48bfe9ded830ccb1422537ac1b518
 	private HashMap<TileImageName, Image> tileImageMap;
 	private HashMap<BrickImageName, Image> brickImageMap;
 	private HashMap<BrickImageName, Integer> brickSizes;
