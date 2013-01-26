@@ -7,22 +7,22 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 public class Virgin implements Drawable {
-	
+
 	private enum MoveDirection {UP, DOWN, LEFT, RIGHT, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT};
 	private int posX;
 	private int posY;
 	private double delta_posX;
 	private double delta_posY; 
 	private Image image;
-	
+
 	private ArrayList<Brick> fixedObjects;
-	
+
 	private int freeZoneTop;
 	private int freeZoneRight;
 	private int freeZoneBottom;
 	private int freeZoneLeft;
 
-	
+
 	public Virgin(Image image, int posX, int posY, int[] freeZone, ArrayList<Brick> fixedObjects) {
 		this.fixedObjects = fixedObjects;
 		this.image = image;
@@ -30,7 +30,7 @@ public class Virgin implements Drawable {
 		this.posY = posY;
 		delta_posX = 0;
 		delta_posY = 0;
-		
+
 		freeZoneTop = freeZone[0];
 		freeZoneRight = freeZone[1];
 		freeZoneBottom = freeZone[2];
@@ -39,8 +39,29 @@ public class Virgin implements Drawable {
 	}
 
 	public void draw(Graphics g) {
-//		g.drawImage(image, getScreenPos().x, getScreenPos().y);
-		g.drawImage(image, posX, posY);
+		//		g.drawImage(image, getScreenPos().x, getScreenPos().y);
+
+
+		drawTileLines(g);
+		
+		//g.drawImage(image, posX, posY);
+	}
+
+	private void drawTileLines(Graphics g) {
+		int bottomY = posY + image.getHeight();
+		int topY = bottomY - Program.tileHeight;
+		int leftY = bottomY - Program.tileHeight/2;
+		int rightY = leftY;
+		
+		int bottomX = posX + Program.tileWidth/2;
+		int leftX = posX;
+		int rightX = posX + Program.tileWidth;
+		int topX = bottomX;
+
+		g.drawLine(bottomX, bottomY, rightX, rightY);
+		g.drawLine(bottomX, bottomY, leftX, leftY);
+		g.drawLine(topX, topY, rightX, rightY);
+		g.drawLine(topX, topY, leftX, leftY);
 	}
 
 	@Override
@@ -53,24 +74,24 @@ public class Virgin implements Drawable {
 	public void update(int delta, Pair delta_pos) {
 	}
 
-//	private Pair getScreenPos() {
-//	    int retX = posX * (Program.tileWidth / 2) + posY * -Program.tileHeight;
-//	    int retY = posX * (Program.tileHeight / 2) + posY * (Program.tileHeight / 2); 		
-//		return new Pair(retX, retY);
-//		
-//	}
-	
+	//	private Pair getScreenPos() {
+	//	    int retX = posX * (Program.tileWidth / 2) + posY * -Program.tileHeight;
+	//	    int retY = posX * (Program.tileHeight / 2) + posY * (Program.tileHeight / 2); 		
+	//		return new Pair(retX, retY);
+	//		
+	//	}
+
 	public Pair update(int delta, Input input) {
 		int pixels_per_sec = 150;
 		double time = (double)delta / 1000;
 		double pixels = time * pixels_per_sec;
-		
+
 		int buttons = 0;
 		boolean moveUp = false;
 		boolean moveDown = false;
 		boolean moveLeft = false;
 		boolean moveRight = false;
-	
+
 		if (input.isKeyDown(Input.KEY_UP)) {
 			moveUp = true;
 			buttons++;
@@ -88,13 +109,13 @@ public class Virgin implements Drawable {
 			buttons++;
 		}
 		MoveDirection currentMoveDirection = getCurrentMoveDirection(moveUp, moveDown, moveLeft, moveRight);
-		
+
 		if (buttons > 1) {
 			if (moveDown == moveLeft) { //Moving left/right
 				pixels *= 0.6;
 			}
 		}
-		
+
 		if (moveDown) {
 			delta_posX -= pixels * 2;
 			delta_posY += pixels;
@@ -119,8 +140,8 @@ public class Virgin implements Drawable {
 		posY += moveY;
 
 		collisionDetection(currentMoveDirection);
-		
-				
+
+
 		int correctX = 0;
 		int correctY = 0;
 		if (posY < freeZoneTop) {
@@ -172,10 +193,36 @@ public class Virgin implements Drawable {
 	public Pair getZ() {
 		return new Pair(posX, posY + image.getHeight());
 	}
-	
+
 	void collisionDetection(MoveDirection moveDirection) {
-	
+		if(moveDirection == null)
+			return;
+
+
+		int bottomY = posY + image.getHeight();
+		int topY = bottomY - Program.tileHeight;
+		int leftY = bottomY - Program.tileHeight/2;
+
+		switch (moveDirection) {
+
+		case UPLEFT:
+			for(Brick b: fixedObjects) {
+				
+				
+				
+				double distance = Math.sqrt(2)/2 * (1/2 * (posX - b.brickBottom.x) + b.brickBottom.y - leftY);
+				if(distance > 0) {
+					System.out.println("COLLISION!! : " + distance + " " + b.toString());
+					//break;
+				}
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
-	
+
+
+
 }

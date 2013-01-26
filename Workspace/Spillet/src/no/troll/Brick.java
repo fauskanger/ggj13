@@ -9,10 +9,10 @@ public class Brick implements Drawable {
 	private int posX;
 	private int posY;
 	
-	private Pair brickTop;
-	private Pair brickBottom;
-	private Pair brickLeft;
-	private Pair brickRight;
+	public Pair brickTop;
+	public Pair brickBottom;
+	public Pair brickLeft;
+	public Pair brickRight;
 	
 	public Brick(Image image, int posX, int posY, int xPosForZ) {
 		this.posX = posX;
