@@ -8,9 +8,11 @@ import org.newdawn.slick.SlickException;
 public class Resources {
 	
 	public enum TileImageName {Dirt1, Dirt2, Dirt3, RockBlock};
+	public enum ImageName {Wall};
 
 	private HashMap<TileImageName, Image> tileImageMap;
-	private TileImageName[] tileImageTypes;
+	private HashMap<ImageName, Image> imageMap;
+	private TileImageName[] tileImageNames;
 	
 	private String base_path;
 	
@@ -18,7 +20,8 @@ public class Resources {
 	public Resources(String base_path) {
 		this.base_path = base_path;
 		tileImageMap = new HashMap<TileImageName, Image>();
-		tileImageTypes = TileImageName.values();
+		imageMap = new HashMap<Resources.ImageName, Image>();
+		tileImageNames = TileImageName.values();
 		
 		loadTiles();
 		loadImages();
@@ -31,8 +34,18 @@ public class Resources {
 		addTile("SteinblokkTing.png", TileImageName.RockBlock);
 	}
 	
+	private void addImage(String fileName, ImageName imageName) {
+		String location = base_path + "img/koz/" + fileName;
+		try {
+			imageMap.put(imageName, new Image(location));
+		} catch (SlickException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: no image at location: " + location);
+		}		
+	}
+
 	private void loadImages() {
-		
+		addImage("Wall.png", ImageName.Wall);		
 	}
 	
 	
@@ -52,7 +65,11 @@ public class Resources {
 	
 	public Image getRandomTileImage() {
 		int r = (int) (Math.random() * TileImageName.values().length);
-		return tileImageMap.get(tileImageTypes[r]);
+		return tileImageMap.get(tileImageNames[r]);
 	}
-	
+
+	public Image getImage(ImageName imageName) {
+		return imageMap.get(imageName);
+	}
+
 }

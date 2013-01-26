@@ -34,8 +34,12 @@ public class Tile implements Drawable {
 
 	@Override
 	public void update(int delta, Pair delta_pos) {
-		// TODO Auto-generated method stub
-		
+		updatePosition(delta_pos.x, delta_pos.y);
+	}
+
+	@Override
+	public Pair getZ() {
+		return new Pair(posX, posY + image.getHeight());
 	}
 
 }

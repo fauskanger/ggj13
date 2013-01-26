@@ -69,5 +69,10 @@ public class TileManager implements Drawable {
 	public void updatePosition(int delta_x, int delta_y) {
 	}
 
+	@Override
+	public Pair getZ() {
+		return new Pair(0, -100);
+	}
+
 	
 }
