@@ -10,10 +10,32 @@ import org.newdawn.slick.SlickException;
 public class Program extends BasicGame {
 
 	public Program() {
-		super("Hello World");
+		super("Spillet");
 		// TODO Auto-generated constructor stub
 	}
 
+	public void drawTile(Graphics g, int x, int y, int w) {
+		int h = w / 2;
+		int top_x = x + w / 2;
+		int top_y = y;
+		int left_x = x;
+		int left_y = y + h / 2;
+		int bottom_x = x + w / 2;
+		int bottom_y = y + h;
+		int right_x = x + w;
+		int right_y = y + h / 2;
+		g.drawLine(top_x, top_y, left_x, left_y);
+		g.drawLine(top_x, top_y, right_x, right_y);
+		g.drawLine(bottom_x, bottom_y, left_x, left_y);
+		g.drawLine(bottom_x, bottom_y, right_x, right_y);
+	}
+	
+	public void makeGrid(Graphics g, int x, int y, int columns, int rows, int tileWidth) {
+		for (int c=0; c<columns; c++) {
+			int x_cord = x + tileWidth * c; 
+		}
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -27,7 +49,9 @@ public class Program extends BasicGame {
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		// TODO Auto-generated method stub
 		g.setColor(new Color(255, 255, 255));
-		g.drawLine(0, 50, 1000, 50);
+		int width = 100;
+		drawTile(g, 40, 40, width);
+		drawTile(g, 40+width, 40, width);
 	}
 
 	@Override
