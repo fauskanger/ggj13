@@ -8,11 +8,15 @@ import org.newdawn.slick.SlickException;
 public class Resources {
 	
 	public enum TileImageName {Dirt1, Dirt2, Dirt3, RockBlock};
-	public enum ImageName {Wall};
+	public enum BrickImageName {Wall};
+	public enum CharacterImageName {Virgin, Troll};
 
 	private HashMap<TileImageName, Image> tileImageMap;
-	private HashMap<ImageName, Image> imageMap;
+	private HashMap<BrickImageName, Image> brickImageMap;
+	private HashMap<CharacterImageName, Image> characterImageMap;
+	
 	private TileImageName[] tileImageNames;
+	private BrickImageName[] brickImageNames;
 	
 	private String base_path;
 	
@@ -20,11 +24,13 @@ public class Resources {
 	public Resources(String base_path) {
 		this.base_path = base_path;
 		tileImageMap = new HashMap<TileImageName, Image>();
-		imageMap = new HashMap<Resources.ImageName, Image>();
+		brickImageMap = new HashMap<Resources.BrickImageName, Image>();
 		tileImageNames = TileImageName.values();
+		brickImageNames = BrickImageName.values();
 		
 		loadTiles();
-		loadImages();
+		loadBricks();
+		loadCharacters();
 	}
 	
 	private void loadTiles() {
@@ -33,19 +39,22 @@ public class Resources {
 		addTile("DirtTileMal3.png", TileImageName.Dirt3);
 		addTile("SteinblokkTing.png", TileImageName.RockBlock);
 	}
-	
-	private void addImage(String fileName, ImageName imageName) {
+
+	private void loadCharacters() {
+	}
+
+	private void addImage(String fileName, BrickImageName imageName) {
 		String location = base_path + "img/koz/" + fileName;
 		try {
-			imageMap.put(imageName, new Image(location));
+			brickImageMap.put(imageName, new Image(location));
 		} catch (SlickException e) {
 			e.printStackTrace();
 			System.out.println("ERROR: no image at location: " + location);
 		}		
 	}
 
-	private void loadImages() {
-		addImage("Wall.png", ImageName.Wall);		
+	private void loadBricks() {
+		addImage("Wall.png", BrickImageName.Wall);		
 	}
 	
 	
@@ -68,8 +77,8 @@ public class Resources {
 		return tileImageMap.get(tileImageNames[r]);
 	}
 
-	public Image getImage(ImageName imageName) {
-		return imageMap.get(imageName);
+	public Image getImage(BrickImageName imageName) {
+		return brickImageMap.get(imageName);
 	}
 
 }

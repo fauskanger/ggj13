@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
-import no.troll.Resources.ImageName;
+import no.troll.Resources.BrickImageName;
 import no.troll.Resources.TileImageName;
 
 import org.newdawn.slick.AppGameContainer;
@@ -67,7 +67,7 @@ public class Program extends BasicGame {
 		freeZone[3] = freeZoneLeft;
 		virgin = new Virgin(resources.getTileImage(TileImageName.RockBlock), windowWidth/2, windowHeight/2, freeZone, fixedObjects);
 		drawables.add(virgin);
-		Drawable wall = new Wall(resources.getImage(ImageName.Wall), 500, 300);
+		Drawable wall = new Wall(resources.getImage(BrickImageName.Wall), 500, 300);
 		drawables.add(wall);
 		fixedObjects.add(wall);
 	}
