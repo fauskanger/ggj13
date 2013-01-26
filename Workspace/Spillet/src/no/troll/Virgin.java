@@ -8,6 +8,9 @@ import no.troll.Resources.CharacterImageName;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Transform;
 
 public class Virgin implements Drawable {
 
@@ -30,6 +33,8 @@ public class Virgin implements Drawable {
 	private int freeZoneRight;
 	private int freeZoneBottom;
 	private int freeZoneLeft;
+	
+	private Polygon shape;
 
 	private MoveDirection currentMoveDirection;
 	private int currentSpriteFrame;
@@ -46,6 +51,25 @@ public class Virgin implements Drawable {
 		currentSpriteFrame = 0;
 		timePerSpriteLoop = 500;
 		deltaTimeSpriteLoop = 0;
+		
+		
+		
+
+		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
+		int topY = bottomY - Program.tileHeight;
+		int leftY = bottomY - Program.tileHeight/2;
+		int rightY = leftY;
+
+		int bottomX = posX + Program.tileWidth/2;
+		int leftX = posX;
+		int rightX = posX + Program.tileWidth;
+		int topX = bottomX;
+		shape = new Polygon();
+		shape.addPoint(bottomX, bottomY);
+		shape.addPoint(rightX, rightY);
+		shape.addPoint(leftX, leftY);
+		shape.addPoint(topX, topY);
+		
 		addImages();
 
 
@@ -114,7 +138,7 @@ public class Virgin implements Drawable {
 
 
 		drawTileLines(g);
-//		System.out.println("Koza: " + currentMoveDirection + " " + currentSpriteFrame);
+		//		System.out.println("Koza: " + currentMoveDirection + " " + currentSpriteFrame);
 		Image i = images.get(currentMoveDirection)[currentSpriteFrame];
 		g.drawImage(i, posX, posY);
 
@@ -122,20 +146,8 @@ public class Virgin implements Drawable {
 	}
 
 	private void drawTileLines(Graphics g) {
-		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
-		int topY = bottomY - Program.tileHeight;
-		int leftY = bottomY - Program.tileHeight/2;
-		int rightY = leftY;
 
-		int bottomX = posX + Program.tileWidth/2;
-		int leftX = posX;
-		int rightX = posX + Program.tileWidth;
-		int topX = bottomX;
-
-		g.drawLine(bottomX, bottomY, rightX, rightY);
-		g.drawLine(bottomX, bottomY, leftX, leftY);
-		g.drawLine(topX, topY, rightX, rightY);
-		g.drawLine(topX, topY, leftX, leftY);
+		g.draw(shape);
 	}
 
 	@Override
@@ -286,13 +298,6 @@ public class Virgin implements Drawable {
 		case UPLEFT:
 			for(Brick b: fixedObjects) {
 
-
-
-				double distance = Math.sqrt(2)/2 * (1/2 * (posX - b.brickBottom.x) + b.brickBottom.y - leftY);
-				if(distance > 0) {
-					System.out.println("COLLISION!! : " + distance + " " + b.toString());
-					//break;
-				}
 			}
 			break;
 		default:
