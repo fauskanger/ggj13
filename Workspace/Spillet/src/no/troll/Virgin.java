@@ -1,6 +1,9 @@
 package no.troll;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import no.troll.Resources.CharacterImageName;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -8,34 +11,102 @@ import org.newdawn.slick.Input;
 
 public class Virgin implements Drawable {
 
-	private enum MoveDirection {UP, DOWN, LEFT, RIGHT, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT};
+	private enum MoveDirection {UP, DOWN, LEFT, RIGHT, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT, STILL};
+
 	private int posX;
 	private int posY;
 	private double delta_posX;
 	private double delta_posY; 
-	private Image image;
 
 	private ArrayList<Brick> fixedObjects;
+
+	private HashMap<MoveDirection, Image[]> images;	
+	private Resources resources;
+
+	private int timePerSpriteLoop; // in msec
+	private int deltaTimeSpriteLoop; // in msec
 
 	private int freeZoneTop;
 	private int freeZoneRight;
 	private int freeZoneBottom;
 	private int freeZoneLeft;
 
+	private MoveDirection currentMoveDirection;
+	private int currentSpriteFrame;
 
-	public Virgin(Image image, int posX, int posY, int[] freeZone, ArrayList<Brick> fixedObjects) {
+	public Virgin(Resources resources, int posX, int posY, int[] freeZone, ArrayList<Brick> fixedObjects) {
+		this.resources = resources;
 		this.fixedObjects = fixedObjects;
-		this.image = image;
+		this.images = new HashMap<Virgin.MoveDirection, Image[]>();
 		this.posX = posX;
 		this.posY = posY;
 		delta_posX = 0;
 		delta_posY = 0;
+		currentMoveDirection = MoveDirection.STILL;
+		currentSpriteFrame = 0;
+		timePerSpriteLoop = 500;
+		deltaTimeSpriteLoop = 0;
+		addImages();
+
 
 		freeZoneTop = freeZone[0];
 		freeZoneRight = freeZone[1];
 		freeZoneBottom = freeZone[2];
 		freeZoneLeft = freeZone[3];
+	}
 
+	private void addImages() {
+		Image[] arr = new Image[3];
+		arr[0] = resources.getCharacter(CharacterImageName.Virgin_UP_1);
+		arr[1] = resources.getCharacter(CharacterImageName.Virgin_UP_2);
+		arr[2] = resources.getCharacter(CharacterImageName.Virgin_UP_3);
+		images.put(MoveDirection.UP, arr);
+
+		arr = new Image[3];
+		arr[0] = resources.getCharacter(CharacterImageName.Virgin_DOWN_1);
+		arr[1] = resources.getCharacter(CharacterImageName.Virgin_DOWN_2);
+		arr[2] = resources.getCharacter(CharacterImageName.Virgin_DOWN_3);
+		images.put(MoveDirection.DOWN, arr);
+
+		arr = new Image[3];
+		arr[0] = resources.getCharacter(CharacterImageName.Virgin_LEFT_1);
+		arr[1] = resources.getCharacter(CharacterImageName.Virgin_LEFT_2);
+		arr[2] = resources.getCharacter(CharacterImageName.Virgin_LEFT_3);
+		images.put(MoveDirection.LEFT, arr);
+
+		arr = new Image[3];
+		arr[0] = resources.getCharacter(CharacterImageName.Virgin_RIGHT_1);
+		arr[1] = resources.getCharacter(CharacterImageName.Virgin_RIGHT_2);
+		arr[2] = resources.getCharacter(CharacterImageName.Virgin_RIGHT_3);
+		images.put(MoveDirection.RIGHT, arr);
+
+		arr = new Image[3];
+		arr[0] = resources.getCharacter(CharacterImageName.Virgin_UPLEFT_1);
+		arr[1] = resources.getCharacter(CharacterImageName.Virgin_UPLEFT_2);
+		arr[2] = resources.getCharacter(CharacterImageName.Virgin_UPLEFT_3);
+		images.put(MoveDirection.UPLEFT, arr);
+
+		arr = new Image[3];
+		arr[0] = resources.getCharacter(CharacterImageName.Virgin_UPRIGHT_1);
+		arr[1] = resources.getCharacter(CharacterImageName.Virgin_UPRIGHT_2);
+		arr[2] = resources.getCharacter(CharacterImageName.Virgin_UPRIGHT_3);
+		images.put(MoveDirection.UPRIGHT, arr);
+
+		arr = new Image[3];
+		arr[0] = resources.getCharacter(CharacterImageName.Virgin_DOWNLEFT_1);
+		arr[1] = resources.getCharacter(CharacterImageName.Virgin_DOWNLEFT_2);
+		arr[2] = resources.getCharacter(CharacterImageName.Virgin_DOWNLEFT_3);
+		images.put(MoveDirection.DOWNLEFT, arr);
+
+		arr = new Image[3];
+		arr[0] = resources.getCharacter(CharacterImageName.Virgin_DOWNRIGHT_1);
+		arr[1] = resources.getCharacter(CharacterImageName.Virgin_DOWNRIGHT_2);
+		arr[2] = resources.getCharacter(CharacterImageName.Virgin_DOWNRIGHT_3);
+		images.put(MoveDirection.DOWNRIGHT, arr);
+
+		arr = new Image[1];
+		arr[0] = resources.getCharacter(CharacterImageName.Virgin_STILL);
+		images.put(MoveDirection.STILL, arr);
 	}
 
 	public void draw(Graphics g) {
@@ -43,16 +114,19 @@ public class Virgin implements Drawable {
 
 
 		drawTileLines(g);
-		
+		System.out.println("Koza: " + currentMoveDirection + " " + currentSpriteFrame);
+		Image i = images.get(currentMoveDirection)[currentSpriteFrame];
+		g.drawImage(i, posX, posY);
+
 		//g.drawImage(image, posX, posY);
 	}
 
 	private void drawTileLines(Graphics g) {
-		int bottomY = posY + image.getHeight();
+		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
 		int topY = bottomY - Program.tileHeight;
 		int leftY = bottomY - Program.tileHeight/2;
 		int rightY = leftY;
-		
+
 		int bottomX = posX + Program.tileWidth/2;
 		int leftX = posX;
 		int rightX = posX + Program.tileWidth;
@@ -108,7 +182,15 @@ public class Virgin implements Drawable {
 			moveRight = true;
 			buttons++;
 		}
-		MoveDirection currentMoveDirection = getCurrentMoveDirection(moveUp, moveDown, moveLeft, moveRight);
+
+		currentMoveDirection = getCurrentMoveDirection(moveUp, moveDown, moveLeft, moveRight);
+		int numberOfSpriteElements = images.get(currentMoveDirection).length;
+		deltaTimeSpriteLoop += delta;
+		if (deltaTimeSpriteLoop > timePerSpriteLoop / numberOfSpriteElements) {
+			currentSpriteFrame = (currentSpriteFrame + 1);
+			deltaTimeSpriteLoop -= timePerSpriteLoop / numberOfSpriteElements;
+		}
+		currentSpriteFrame %= numberOfSpriteElements;
 
 		if (buttons > 1) {
 			if (moveDown == moveLeft) { //Moving left/right
@@ -186,12 +268,12 @@ public class Virgin implements Drawable {
 		else if (moveLeft) {
 			return MoveDirection.UPLEFT;
 		}
-		return null;
+		return MoveDirection.STILL;
 	}
 
 	@Override
 	public Pair getZ() {
-		return new Pair(posX, posY + image.getHeight());
+		return new Pair(posX, posY + images.get(MoveDirection.STILL)[0].getHeight());
 	}
 
 	void collisionDetection(MoveDirection moveDirection) {
@@ -199,7 +281,7 @@ public class Virgin implements Drawable {
 			return;
 
 
-		int bottomY = posY + image.getHeight();
+		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
 		int topY = bottomY - Program.tileHeight;
 		int leftY = bottomY - Program.tileHeight/2;
 
@@ -207,9 +289,9 @@ public class Virgin implements Drawable {
 
 		case UPLEFT:
 			for(Brick b: fixedObjects) {
-				
-				
-				
+
+
+
 				double distance = Math.sqrt(2)/2 * (1/2 * (posX - b.brickBottom.x) + b.brickBottom.y - leftY);
 				if(distance > 0) {
 					System.out.println("COLLISION!! : " + distance + " " + b.toString());

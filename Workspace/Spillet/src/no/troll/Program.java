@@ -34,6 +34,8 @@ public class Program extends BasicGame {
 	private ArrayList<Brick> bricks;
 	private ArrayList<Drawable> mobs;
 	
+
+	private SoundManager noe;
 	
 	public Program() {
 		super("Spillet");
@@ -66,7 +68,7 @@ public class Program extends BasicGame {
 		freeZone[1] = freeZoneRight;
 		freeZone[2] = freeZoneBottom;
 		freeZone[3] = freeZoneLeft;
-		virgin = new Virgin(resources.getCharacter(CharacterImageName.Virgin), windowWidth/2, windowHeight/2, freeZone, bricks);
+		virgin = new Virgin(resources, windowWidth/2, windowHeight/2, freeZone, bricks);
 		drawables.add(virgin);
 		Brick wall = new Brick(resources.getBrick(BrickImageName.Wall), 600, 300, resources.getBrickXPosForZ(BrickImageName.Wall));
 		Brick fjell = new Brick(resources.getBrick(BrickImageName.Fjell), 300, 150, resources.getBrickXPosForZ(BrickImageName.Fjell));
@@ -74,6 +76,8 @@ public class Program extends BasicGame {
 		bricks.add(wall);
 		drawables.add(fjell);
 		bricks.add(fjell);
+
+		noe = new SoundManager(resources); 
 	}
 
 	@Override
