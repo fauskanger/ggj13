@@ -10,7 +10,33 @@ public class Resources {
 	
 	public enum TileImageName {Dirt1, Dirt2, Dirt3, Grass1, Grass2, Grass3};
 	public enum BrickImageName {Wall, Fjell};
-	public enum CharacterImageName {Virgin, Troll};
+	public enum CharacterImageName { Virgin,
+									 Virgin_STILL, 
+									 Virgin_UP_1,
+									 Virgin_UP_2,
+									 Virgin_UP_3,
+									 Virgin_RIGHT_1,
+									 Virgin_RIGHT_2,
+									 Virgin_RIGHT_3,
+									 Virgin_LEFT_1,
+									 Virgin_LEFT_2,
+									 Virgin_LEFT_3,
+									 Virgin_DOWN_1,
+									 Virgin_DOWN_2,
+									 Virgin_DOWN_3,
+									 Virgin_UPLEFT_1,
+									 Virgin_UPLEFT_2,
+									 Virgin_UPLEFT_3,
+									 Virgin_UPRIGHT_1,
+									 Virgin_UPRIGHT_2,
+									 Virgin_UPRIGHT_3,
+									 Virgin_DOWNLEFT_1,
+									 Virgin_DOWNLEFT_2,
+									 Virgin_DOWNLEFT_3,
+									 Virgin_DOWNRIGHT_1,
+									 Virgin_DOWNRIGHT_2,
+									 Virgin_DOWNRIGHT_3,
+									 Troll };
 
 	private HashMap<TileImageName, Image> tileImageMap;
 	private HashMap<BrickImageName, Image> brickImageMap;
@@ -48,7 +74,32 @@ public class Resources {
 
 	private void loadCharacters() {
 		addCharacter("Troll.png", CharacterImageName.Troll);
-		addCharacter("Virgin.png", CharacterImageName.Virgin);
+		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin);
+		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_DOWN_1);
+		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_DOWN_2);
+		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_DOWN_3);
+		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_DOWNLEFT_1);
+		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_DOWNLEFT_2);
+		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_DOWNLEFT_3);
+		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_DOWNRIGHT_1);
+		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_DOWNRIGHT_2);
+		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_DOWNRIGHT_3);
+		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_LEFT_1);
+		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_LEFT_2);
+		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_LEFT_3);
+		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_RIGHT_1);
+		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_RIGHT_2);
+		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_RIGHT_3);
+		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_STILL);
+		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_UP_1);
+		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_UP_2);
+		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_UP_3);
+		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_UPLEFT_1);
+		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_UPLEFT_2);
+		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_UPLEFT_3);
+		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_UPRIGHT_1);
+		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_UPRIGHT_2);
+		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_UPRIGHT_3);
 	}
 
 	private void loadBricks() {

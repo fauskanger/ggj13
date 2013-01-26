@@ -66,7 +66,7 @@ public class Program extends BasicGame {
 		freeZone[1] = freeZoneRight;
 		freeZone[2] = freeZoneBottom;
 		freeZone[3] = freeZoneLeft;
-		virgin = new Virgin(resources.getCharacter(CharacterImageName.Virgin), windowWidth/2, windowHeight/2, freeZone, bricks);
+		virgin = new Virgin(resources, windowWidth/2, windowHeight/2, freeZone, bricks);
 		drawables.add(virgin);
 		Drawable wall = new Brick(resources.getBrick(BrickImageName.Wall), 600, 300, resources.getBrickXPosForZ(BrickImageName.Wall));
 		Drawable fjell = new Brick(resources.getBrick(BrickImageName.Fjell), 300, 150, resources.getBrickXPosForZ(BrickImageName.Fjell));
