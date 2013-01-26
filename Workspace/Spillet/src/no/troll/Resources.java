@@ -110,32 +110,32 @@ public class Resources {
 
 	private void loadCharacters() {
 		addCharacter("Troll.png", CharacterImageName.Troll);
-		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin);
-		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_DOWN_1);
-		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_DOWN_2);
-		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_DOWN_3);
-		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_DOWNLEFT_1);
-		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_DOWNLEFT_2);
-		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_DOWNLEFT_3);
-		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_DOWNRIGHT_1);
-		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_DOWNRIGHT_2);
-		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_DOWNRIGHT_3);
-		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_LEFT_1);
-		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_LEFT_2);
-		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_LEFT_3);
-		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_RIGHT_1);
-		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_RIGHT_2);
-		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_RIGHT_3);
-		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_STILL);
-		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_UP_1);
-		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_UP_2);
-		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_UP_3);
-		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_UPLEFT_1);
-		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_UPLEFT_2);
-		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_UPLEFT_3);
-		addCharacter("Virgin/WalkDownL1.png", CharacterImageName.Virgin_UPRIGHT_1);
-		addCharacter("Virgin/WalkDownL2.png", CharacterImageName.Virgin_UPRIGHT_2);
-		addCharacter("Virgin/WalkDownL3.png", CharacterImageName.Virgin_UPRIGHT_3);
+		addCharacter("Virgin/DownLeft1.png", CharacterImageName.Virgin);
+		addCharacter("Virgin/DownLeft1.png", CharacterImageName.Virgin_DOWN_1);
+		addCharacter("Virgin/DownLeft2.png", CharacterImageName.Virgin_DOWN_2);
+		addCharacter("Virgin/DownLeft3.png", CharacterImageName.Virgin_DOWN_3);
+		addCharacter("Virgin/DownLeft1.png", CharacterImageName.Virgin_DOWNLEFT_1);
+		addCharacter("Virgin/DownLeft2.png", CharacterImageName.Virgin_DOWNLEFT_2);
+		addCharacter("Virgin/DownLeft3.png", CharacterImageName.Virgin_DOWNLEFT_3);
+		addCharacter("Virgin/DownRight1.png", CharacterImageName.Virgin_DOWNRIGHT_1);
+		addCharacter("Virgin/DownRight2.png", CharacterImageName.Virgin_DOWNRIGHT_2);
+		addCharacter("Virgin/DownRight3.png", CharacterImageName.Virgin_DOWNRIGHT_3);
+		addCharacter("Virgin/UpLeft1.png", CharacterImageName.Virgin_LEFT_1);
+		addCharacter("Virgin/UpLeft2.png", CharacterImageName.Virgin_LEFT_2);
+		addCharacter("Virgin/UpLeft3.png", CharacterImageName.Virgin_LEFT_3);
+		addCharacter("Virgin/UpRight1.png", CharacterImageName.Virgin_RIGHT_1);
+		addCharacter("Virgin/UpRight2.png", CharacterImageName.Virgin_RIGHT_2);
+		addCharacter("Virgin/UpRight3.png", CharacterImageName.Virgin_RIGHT_3);
+		addCharacter("Virgin/DownLeft1.png", CharacterImageName.Virgin_STILL);
+		addCharacter("Virgin/UpRight1.png", CharacterImageName.Virgin_UP_1);
+		addCharacter("Virgin/UpRight2.png", CharacterImageName.Virgin_UP_2);
+		addCharacter("Virgin/UpRight3.png", CharacterImageName.Virgin_UP_3);
+		addCharacter("Virgin/UpLeft1.png", CharacterImageName.Virgin_UPLEFT_1);
+		addCharacter("Virgin/UpLeft2.png", CharacterImageName.Virgin_UPLEFT_2);
+		addCharacter("Virgin/UpLeft3.png", CharacterImageName.Virgin_UPLEFT_3);
+		addCharacter("Virgin/UpRight1.png", CharacterImageName.Virgin_UPRIGHT_1);
+		addCharacter("Virgin/UpRight2.png", CharacterImageName.Virgin_UPRIGHT_2);
+		addCharacter("Virgin/UpRight3.png", CharacterImageName.Virgin_UPRIGHT_3);
 	}
 
 	private void loadBricks() {
