@@ -11,7 +11,7 @@ public class Brick implements Drawable {
 	private int posX;
 	private int posY;
 	
-	private Polygon shape;
+	public Polygon shape;
 	
 	public Brick(Image image, int posX, int posY, int xPosForZ) {
 		this.posX = posX;
