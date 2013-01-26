@@ -131,7 +131,7 @@ public class Virgin implements Drawable {
 		int leftX = posX;
 		int rightX = posX + Program.tileWidth;
 		int topX = bottomX;
-
+		
 		g.drawLine(bottomX, bottomY, rightX, rightY);
 		g.drawLine(bottomX, bottomY, leftX, leftY);
 		g.drawLine(topX, topY, rightX, rightY);
@@ -277,27 +277,26 @@ public class Virgin implements Drawable {
 	}
 
 	void collisionDetection(MoveDirection moveDirection) {
-		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
-		int topY = bottomY - Program.tileHeight;
-		int leftY = bottomY - Program.tileHeight/2;
-
-		switch (moveDirection) {
-
-		case UPLEFT:
-			for(Brick b: fixedObjects) {
-
-
-
-				double distance = Math.sqrt(2)/2 * (1/2 * (posX - b.brickBottom.x) + b.brickBottom.y - leftY);
-				if(distance > 0) {
-					System.out.println("COLLISION!! : " + distance + " " + b.toString());
-					//break;
-				}
-			}
-			break;
-		default:
-			break;
-		}
+//		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
+//		int topY = bottomY - Program.tileHeight;
+//		int leftY = bottomY - Program.tileHeight/2;
+//
+//		switch (moveDirection) {
+//
+//		case UPLEFT:
+//			for(Brick b: fixedObjects) {
+//
+//				double distance = Math.sqrt(2)/2 * (1/2 * (posX - b.brickBottom.x) + b.brickBottom.y - leftY);
+//				if(distance > 0) {
+//					System.out.println("COLLISION!! : " + distance + " " + b.toString());
+//					//break;
+//				}
+//
+//			}
+//			break;
+//		default:
+//			break;
+//		}
 	}
 
 
