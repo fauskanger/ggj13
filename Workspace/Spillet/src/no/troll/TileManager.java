@@ -62,10 +62,6 @@ public class TileManager implements Drawable {
 	}
 
 	@Override
-	public void setPosition(int x, int y) {
-	}
-
-	@Override
 	public void updatePosition(int delta_x, int delta_y) {
 	}
 
