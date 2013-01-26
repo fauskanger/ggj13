@@ -30,6 +30,8 @@ public class Virgin implements Drawable {
 
 	private boolean attack = false; 
 	private SoundManager Lyd; 
+	
+	private Brick lastCollisionBrick;
 
 
 	private int timePerSpriteLoop; // in msec
@@ -255,9 +257,6 @@ public class Virgin implements Drawable {
 		delta_posX -= moveX;
 		delta_posY -= moveY;
 		
-		
-//		posX += moveX;
-//		posY += moveY;
 		updatePosition(moveX, moveY);
 		
 
@@ -278,19 +277,41 @@ public class Virgin implements Drawable {
 			if (posX > freeZoneRight) {
 				correctX = freeZoneRight - posX;
 			}
-//			posX += correctX;
-//			posY += correctY;
-			
+
 			updatePosition(correctX, correctY);
-			
-			
-//			translatePolygon(moveX+correctX, moveY+correctY);
 		}
 		else
 		{
-//			posX -= moveX;
-//			posY -= moveY;
-			updatePosition(-moveX, -moveY);
+			int dy,dx;
+			while(collisionDetection(currentMoveDirection)) {
+				if(getZ().x > lastCollisionBrick.getZ().x) {
+
+					if (moveY==0) {
+						dy = (getZ().y > lastCollisionBrick.getZ().y)? 1:-1;
+						System.out.print("Horizontal ");
+					} else {
+						dy = (moveY>0)? 1:-1;
+						System.out.print((moveY>0)?"Downward ": "Upward");
+					}
+					dx = 1;
+					updatePosition(dx, dy);
+					System.out.println("Right side!");
+				}
+				else 
+				{
+
+					if (moveY==0) {
+						dy = (getZ().y > lastCollisionBrick.getZ().y)? 1:-1;
+						System.out.print("Horizontal ");
+					} else {
+						dy = (moveY>0)? 1:-1;
+						System.out.print((moveY>0)?"Downward ": "Upward");
+					}
+					dx = -1;
+					updatePosition(dx, dy);
+					System.out.println("Left side!");
+				}
+			}	
 		}
 	
 		return new Pair(correctX, correctY);
@@ -330,13 +351,13 @@ public class Virgin implements Drawable {
 
 	@Override
 	public Pair getZ() {
-		return new Pair(posX, posY + images.get(MoveDirection.STILL)[0].getHeight());
+		return new Pair(posX+Program.tileWidth/2, posY + images.get(MoveDirection.STILL)[0].getHeight());
 	}
 
 	boolean collisionDetection(MoveDirection moveDirection) {
 		for(Brick b: fixedObjects) {
 			if(b.shape.intersects(shape)) {
-				System.out.println("COLLISION!");
+				lastCollisionBrick = b;
 				return true;
 			}
 		}
