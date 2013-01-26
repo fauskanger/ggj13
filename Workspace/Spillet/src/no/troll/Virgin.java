@@ -43,12 +43,6 @@ public class Virgin implements Drawable {
 	}
 
 	@Override
-	public void setPosition(int x, int y) {
-		this.posX = x;
-		this.posY = y;
-	}
-
-	@Override
 	public void updatePosition(int delta_x, int delta_y) {
 		this.posX += delta_x;
 		this.posY += delta_y;

@@ -7,12 +7,13 @@ import org.newdawn.slick.SlickException;
 
 public class Resources {
 	
-	public enum TileImageName {Dirt1, Dirt2, Dirt3, RockBlock};
-	public enum BrickImageName {Wall};
+	public enum TileImageName {Dirt1, Dirt2, Dirt3};
+	public enum BrickImageName {Wall, Fjell};
 	public enum CharacterImageName {Virgin, Troll};
 
 	private HashMap<TileImageName, Image> tileImageMap;
 	private HashMap<BrickImageName, Image> brickImageMap;
+	private HashMap<BrickImageName, Integer> brickSizes;
 	private HashMap<CharacterImageName, Image> characterImageMap;
 	
 	private TileImageName[] tileImageNames;
@@ -25,6 +26,8 @@ public class Resources {
 		this.base_path = base_path;
 		tileImageMap = new HashMap<TileImageName, Image>();
 		brickImageMap = new HashMap<Resources.BrickImageName, Image>();
+		characterImageMap = new HashMap<Resources.CharacterImageName, Image>();
+		brickSizes = new HashMap<Resources.BrickImageName, Integer>();
 		tileImageNames = TileImageName.values();
 		brickImageNames = BrickImageName.values();
 		
@@ -37,26 +40,38 @@ public class Resources {
 		addTile("DirtTileMal.png", TileImageName.Dirt1);
 		addTile("DirtTileMal2.png", TileImageName.Dirt2);
 		addTile("DirtTileMal3.png", TileImageName.Dirt3);
-		addTile("SteinblokkTing.png", TileImageName.RockBlock);
 	}
 
 	private void loadCharacters() {
+		addCharacter("Troll.png", CharacterImageName.Troll);
+		addCharacter("Virgin.png", CharacterImageName.Virgin);
 	}
 
-	private void addImage(String fileName, BrickImageName imageName) {
-		String location = base_path + "img/koz/" + fileName;
+	private void loadBricks() {
+		addBrick("Wall.png", BrickImageName.Wall, 50);
+		addBrick("Fjell.png", BrickImageName.Fjell, 100);
+	}
+
+	private void addCharacter(String fileName, CharacterImageName imageName) {
+		String location = base_path + "img/characters/" + fileName;
 		try {
-			brickImageMap.put(imageName, new Image(location));
+			characterImageMap.put(imageName, new Image(location));
 		} catch (SlickException e) {
 			e.printStackTrace();
 			System.out.println("ERROR: no image at location: " + location);
 		}		
-	}
-
-	private void loadBricks() {
-		addImage("Wall.png", BrickImageName.Wall);		
-	}
+	}	
 	
+	private void addBrick(String fileName, BrickImageName imageName, int xPosForZ) {
+		String location = base_path + "img/bricks/" + fileName;
+		try {
+			brickImageMap.put(imageName, new Image(location));
+			brickSizes.put(imageName, xPosForZ);
+		} catch (SlickException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: no image at location: " + location);
+		}		
+	}	
 	
 	private void addTile(String fileName, TileImageName tileName) {
 		String location = base_path + "img/tiles/" + fileName;
@@ -77,8 +92,21 @@ public class Resources {
 		return tileImageMap.get(tileImageNames[r]);
 	}
 
-	public Image getImage(BrickImageName imageName) {
+	public Image getBrick(BrickImageName imageName) {
 		return brickImageMap.get(imageName);
+	}
+
+	public int getBrickXPosForZ(BrickImageName imageName) {
+		return brickSizes.get(imageName);
+	}
+
+	public Image getRandomBrickImage() {
+		int r = (int) (Math.random() * BrickImageName.values().length);
+		return brickImageMap.get(brickImageNames[r]);
+	}
+
+	public Image getCharacter(CharacterImageName imageName) {
+		return characterImageMap.get(imageName);
 	}
 
 }
