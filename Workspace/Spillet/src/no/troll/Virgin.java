@@ -87,6 +87,7 @@ public class Virgin implements Drawable {
 			moveRight = true;
 			buttons++;
 		}
+		MoveDirection currentMoveDirection = getCurrentMoveDirection(moveUp, moveDown, moveLeft, moveRight);
 		
 		if (buttons > 1) {
 			if (moveDown == moveLeft) { //Moving left/right
@@ -117,8 +118,6 @@ public class Virgin implements Drawable {
 		posX += moveX;
 		posY += moveY;
 
-		MoveDirection currentMoveDirection = getCurrentMoveDirection(moveUp, moveDown, moveLeft, moveRight);
-		
 		collisionDetection(currentMoveDirection);
 		
 				
@@ -142,7 +141,30 @@ public class Virgin implements Drawable {
 	}
 
 	private MoveDirection getCurrentMoveDirection(boolean moveUp, boolean moveDown,	boolean moveLeft, boolean moveRight) {
-	
+		if (moveUp && moveLeft) {
+			return MoveDirection.UP;
+		}
+		else if (moveDown && moveRight) {
+			return MoveDirection.DOWN;
+		}
+		else if (moveDown && moveLeft) {
+			return MoveDirection.LEFT;
+		}
+		else if (moveUp && moveRight) {
+			return MoveDirection.RIGHT;
+		}
+		else if (moveUp) {
+			return MoveDirection.UPRIGHT;
+		}
+		else if (moveRight) {
+			return MoveDirection.DOWNRIGHT;
+		}
+		else if (moveDown) {
+			return MoveDirection.DOWNLEFT;
+		}
+		else if (moveLeft) {
+			return MoveDirection.UPLEFT;
+		}
 		return null;
 	}
 
