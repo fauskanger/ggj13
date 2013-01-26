@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 
 public class TileImages {
 
-	private String tileImagePath = "/Users/thomas/ggj13/Workspace/Spillet/img/tiles/"; //"../img/tiles/";
+	private String tileImagePath = "img/tiles/";
 	public enum TileImageName {Fence, Dirt1, Dirt2, Dirt3, RockBlock};
 	private HashMap<TileImageName,Image> imageList;
 	
@@ -32,6 +32,10 @@ public class TileImages {
 	
 	public Image getTileImage(TileImageName tileName) {
 		return imageList.get(tileName);
+	}
+	
+	public Image getRandomTileImage() {
+		return imageList.get(Math.random()*TileImageName.values().length);
 	}
 	
 	

@@ -20,7 +20,6 @@ public class Program extends BasicGame {
 	
 	public Program() {
 		super("Spillet");
-		tileImages = new TileImages();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -34,10 +33,11 @@ public class Program extends BasicGame {
 		int bottom_y = y + h;
 		int right_x = x + w;
 		int right_y = y + h / 2;
-		g.drawLine(top_x, top_y, left_x, left_y);
-		g.drawLine(top_x, top_y, right_x, right_y);
-		g.drawLine(bottom_x, bottom_y, left_x, left_y);
-		g.drawLine(bottom_x, bottom_y, right_x, right_y);
+//		g.drawLine(top_x, top_y, left_x, left_y);
+//		g.drawLine(top_x, top_y, right_x, right_y);
+//		g.drawLine(bottom_x, bottom_y, left_x, left_y);
+//		g.drawLine(bottom_x, bottom_y, right_x, right_y);
+		g.drawImage(tileImages.getTileImage(TileImageName.Dirt1), x, y);
 	}
 	
 	public void makeTileRow(Graphics g, int x, int y, int columns) {
@@ -72,12 +72,12 @@ public class Program extends BasicGame {
 		int tileColumns = width / tileWidth + 1;
 		int tileRows = (height / tileHeight + 1) * 2;
 		makeTileGrid(g, -50, -25, tileColumns, tileRows);
-		g.drawImage(tileImages.getTileImage(TileImageName.Dirt1), 20, 20);
 	}
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
 		// TODO Auto-generated method stub
+		tileImages = new TileImages();
 		
 	}
 
