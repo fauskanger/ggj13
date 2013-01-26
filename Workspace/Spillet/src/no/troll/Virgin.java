@@ -137,7 +137,7 @@ public class Virgin implements Drawable {
 		drawTileLines(g);
 		//		System.out.println("Koza: " + currentMoveDirection + " " + currentSpriteFrame);
 		Image i = images.get(currentMoveDirection)[currentSpriteFrame];
-		g.drawImage(i, posX, posY);
+		g.drawImage(i, posX-25, posY+10);
 
 		//g.drawImage(image, posX, posY);
 	}
