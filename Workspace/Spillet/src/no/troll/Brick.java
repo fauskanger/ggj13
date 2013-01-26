@@ -2,6 +2,8 @@ package no.troll;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.geom.Transform;
 
 public class Brick implements Drawable {
 
@@ -9,28 +11,23 @@ public class Brick implements Drawable {
 	private int posX;
 	private int posY;
 	
-	private Pair brickTop;
-	private Pair brickBottom;
-	private Pair brickLeft;
-	private Pair brickRight;
+	public Polygon shape;
 	
 	public Brick(Image image, int posX, int posY, int xPosForZ) {
 		this.posX = posX;
 		this.posY = posY;
 		this.image = image;
-		brickTop = new Pair(posX + image.getWidth() - xPosForZ, getZ().y - image.getWidth() / 2);
-		brickBottom = new Pair(posX + xPosForZ, getZ().y);
-		brickLeft = new Pair(posX, getZ().y - xPosForZ / 2);
-		brickRight = new Pair(posX + image.getWidth(), getZ().y - (brickTop.x - posX) / 2);
+		shape = new Polygon();
+		shape.addPoint(posX + image.getWidth() - xPosForZ, getZ().y - image.getWidth() / 2);
+		shape.addPoint(posX, getZ().y - xPosForZ / 2);
+		shape.addPoint(posX + xPosForZ, getZ().y);
+		shape.addPoint(posX + image.getWidth(), getZ().y - (posX + image.getWidth() - xPosForZ - posX) / 2);
 	}
 	
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(image, posX, posY);
-		g.drawLine(brickTop.x, brickTop.y, brickLeft.x, brickLeft.y);
-		g.drawLine(brickTop.x, brickTop.y, brickRight.x, brickRight.y);
-		g.drawLine(brickBottom.x, brickBottom.y, brickLeft.x, brickLeft.y);
-		g.drawLine(brickBottom.x, brickBottom.y, brickRight.x, brickRight.y);
+		g.draw(shape);
 	}
 
 	@Override
@@ -42,14 +39,7 @@ public class Brick implements Drawable {
 	public void updatePosition(int delta_x, int delta_y) {
 		posX += delta_x;
 		posY += delta_y;
-		brickTop.x += delta_x;
-		brickTop.y += delta_y;		
-		brickRight.x += delta_x;
-		brickRight.y += delta_y;
-		brickBottom.x += delta_x;
-		brickBottom.y += delta_y;
-		brickLeft.x += delta_x;
-		brickLeft.y += delta_y;
+		shape = (Polygon) shape.transform(Transform.createTranslateTransform(delta_x, delta_y));
 	}
 	
 	@Override

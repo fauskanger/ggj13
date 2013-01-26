@@ -31,7 +31,7 @@ public class Program extends BasicGame {
 	private Resources resources;
 	private TileManager tileManager;
 	private ArrayList<Drawable> drawables;
-	private ArrayList<Drawable> bricks;
+	private ArrayList<Brick> bricks;
 	private ArrayList<Drawable> mobs;
 
 	private SoundManager noe;
@@ -59,7 +59,7 @@ public class Program extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		resources = new Resources("res/");
 		drawables = new ArrayList<Drawable>();
-		bricks = new ArrayList<Drawable>();
+		bricks = new ArrayList<Brick>();
 		mobs = new ArrayList<Drawable>();
 		tileManager = new TileManager(resources, windowWidth, windowHeight, tileWidth, tileHeight);
 		int[] freeZone = new int[4];
@@ -69,8 +69,8 @@ public class Program extends BasicGame {
 		freeZone[3] = freeZoneLeft;
 		virgin = new Virgin(resources, windowWidth/2, windowHeight/2, freeZone, bricks);
 		drawables.add(virgin);
-		Drawable wall = new Brick(resources.getBrick(BrickImageName.Wall), 600, 300, resources.getBrickXPosForZ(BrickImageName.Wall));
-		Drawable fjell = new Brick(resources.getBrick(BrickImageName.Fjell), 300, 150, resources.getBrickXPosForZ(BrickImageName.Fjell));
+		Brick wall = new Brick(resources.getBrick(BrickImageName.Wall), 600, 300, resources.getBrickXPosForZ(BrickImageName.Wall));
+		Brick fjell = new Brick(resources.getBrick(BrickImageName.Fjell), 300, 150, resources.getBrickXPosForZ(BrickImageName.Fjell));
 		drawables.add(wall);
 		bricks.add(wall);
 		drawables.add(fjell);
