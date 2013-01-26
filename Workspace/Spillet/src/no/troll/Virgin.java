@@ -15,7 +15,7 @@ public class Virgin implements Drawable {
 	private double delta_posY; 
 	private Image image;
 	
-	private ArrayList<Drawable> fixedObjects;
+	private ArrayList<Brick> fixedObjects;
 	
 	private int freeZoneTop;
 	private int freeZoneRight;
@@ -23,7 +23,7 @@ public class Virgin implements Drawable {
 	private int freeZoneLeft;
 
 	
-	public Virgin(Image image, int posX, int posY, int[] freeZone, ArrayList<Drawable> fixedObjects) {
+	public Virgin(Image image, int posX, int posY, int[] freeZone, ArrayList<Brick> fixedObjects) {
 		this.fixedObjects = fixedObjects;
 		this.image = image;
 		this.posX = posX;
@@ -152,7 +152,7 @@ public class Virgin implements Drawable {
 	}
 	
 	void collisionDetection(MoveDirection moveDirection) {
-		
+	
 	}
 
 	
