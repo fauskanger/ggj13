@@ -9,6 +9,11 @@ import org.newdawn.slick.SlickException;
 
 public class Program extends BasicGame {
 
+	static private int width = 1024;
+	static private int height = 768;
+	static private int tileWidth = 100;
+	static private int tileHeight = 50;
+	
 	public Program() {
 		super("Spillet");
 		// TODO Auto-generated constructor stub
@@ -30,9 +35,18 @@ public class Program extends BasicGame {
 		g.drawLine(bottom_x, bottom_y, right_x, right_y);
 	}
 	
-	public void makeGrid(Graphics g, int x, int y, int columns, int rows, int tileWidth) {
+	public void makeTileRow(Graphics g, int x, int y, int columns) {
 		for (int c=0; c<columns; c++) {
-			int x_cord = x + tileWidth * c; 
+			int x_cord = x + tileWidth * c;
+			drawTile(g, x_cord, y, tileWidth);
+		}
+	}
+	
+	public void makeTileGrid(Graphics g, int x, int y, int columns, int rows) {
+		for (int r=0; r<rows; r++) {
+			int x_cord = x + (tileWidth / 2) * (r % 2);
+			int y_cord = y + r * tileHeight / 2;
+			makeTileRow(g, x_cord, y_cord, columns);
 		}
 	}
 	
@@ -41,7 +55,7 @@ public class Program extends BasicGame {
 	 */
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer app = new AppGameContainer(new Program());		 
-	     app.setDisplayMode(1024, 768, false);
+	     app.setDisplayMode(width, height, false);
 	     app.start();
 	}
 
@@ -49,9 +63,10 @@ public class Program extends BasicGame {
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		// TODO Auto-generated method stub
 		g.setColor(new Color(255, 255, 255));
-		int width = 100;
-		drawTile(g, 40, 40, width);
-		drawTile(g, 40+width, 40, width);
+		int tileWidth = 100;
+		int tileColumns = width / tileWidth + 1;
+		int tileRows = (height / tileHeight + 1) * 2;
+		makeTileGrid(g, -50, -25, tileColumns, tileRows);
 	}
 
 	@Override
