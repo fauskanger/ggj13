@@ -7,6 +7,8 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Program extends BasicGame {
@@ -15,6 +17,11 @@ public class Program extends BasicGame {
 	static private int height = 768;
 	static private int tileWidth = 100;
 	static private int tileHeight = 50;
+	
+
+	Image testImg;
+	int X = 200;
+	int Y = 200;
 	
 	private TileImages tileImages;
 	
@@ -72,6 +79,10 @@ public class Program extends BasicGame {
 		int tileColumns = width / tileWidth + 1;
 		int tileRows = (height / tileHeight + 1) * 2;
 		makeTileGrid(g, -50, -25, tileColumns, tileRows);
+		g.drawImage(tileImages.getTileImage(TileImageName.Dirt1), 20, 20);
+		
+		g.drawString("Hello World", 100, 100);
+		g.drawImage(testImg,X,Y);
 	}
 
 	@Override
@@ -79,12 +90,17 @@ public class Program extends BasicGame {
 		// TODO Auto-generated method stub
 		tileImages = new TileImages();
 		
+		testImg=new Image("C:\\Users\\Guchoo\\Pictures\\Ipod\\Noodle-gorillaz.jpg");
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
 		// TODO Auto-generated method stub
-		
+		Input input = gc.getInput();
+		if(input.isKeyDown(Input.KEY_UP)){Y -=1;}
+		if(input.isKeyDown(Input.KEY_DOWN)){Y ++;}
+		if(input.isKeyDown(Input.KEY_LEFT)){X -=1;}
+		if(input.isKeyDown(Input.KEY_RIGHT)){X ++;}
 	}
 
 }
