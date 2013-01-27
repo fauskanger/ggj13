@@ -1,7 +1,12 @@
 
 package no.troll;
 
+import java.awt.Container;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -15,8 +20,6 @@ public class TileManager implements Drawable {
 	private int tileWidth;
 	private int tileHeight;
 	
-	private final int limit_change_tilesX = 100;
-	private final int limit_change_tilesY = 50;
 	private final int numerOfNewRows = 2;
 	private final int numerOfNewColumns = 2;
 	private int movedX;
@@ -37,12 +40,12 @@ public class TileManager implements Drawable {
 //		int tileRows = (windowHeight / tileHeight + 1) * 2;
 		movedX = 0;
 		movedY = 0;
-		columns = 6;
-		rows = 8;
+		columns = 60;
+		rows = 100;
 		topX = 200;
 		topY = 400;
-		//addTileGrid(-50, -25, tileColumns, tileRows, tileWidth, tileHeight);
-		addTileGrid(topX, topY, columns, rows, tileWidth, tileHeight);
+		addTileGrid(-50, -25, columns, rows, tileWidth, tileHeight);
+//		addTileGrid(topX, topY, columns, rows, tileWidth, tileHeight);
 	}
 	
 	public void addTile(int x, int y) {
@@ -68,6 +71,12 @@ public class TileManager implements Drawable {
 	
 	@Override
 	public void draw(Graphics g) {
+		Collections.sort(tileList, new Comparator<Tile>() {
+			@Override
+			public int compare(Tile a, Tile b) {
+				return Integer.signum(a.getZ().y - b.getZ().y);
+			}
+		});
 		for (Tile tile : tileList) {
 			tile.draw(g);
 		}
@@ -77,8 +86,47 @@ public class TileManager implements Drawable {
 	public void update(int delta, Pair delta_pos) {
 		movedX += delta_pos.x;
 		movedY += delta_pos.y;
-		for (Tile tile : tileList) {
-			tile.update(delta, delta_pos);
+		topX += delta_pos.x;
+		topY += delta_pos.y;
+		
+		boolean removeRows = false;
+		boolean removeAbove = false;
+		int removeY = 0;
+//		
+//		if (Math.abs(movedY) > numerOfNewRows * 25) {
+//			if (movedY > 0) {
+//				topY -= numerOfNewRows * 25;
+//				addTileGrid(topX, topY, columns, numerOfNewRows, tileWidth, tileHeight);
+//				removeY = topY + rows * 25;
+//				movedY -= numerOfNewRows * 25;
+//			}
+//			else {
+//				topY += numerOfNewRows * 25;
+//				addTileGrid(topX, topY + columns * 25, columns, numerOfNewRows, tileWidth, tileHeight);
+//				removeY = topY + numerOfNewRows * 25;
+//				removeAbove = true;
+//				movedY += numerOfNewRows * 25;
+//			}
+//			removeRows = true;
+//		}
+		Iterator<Tile> tileIterator = tileList.iterator(); 
+		while (tileIterator.hasNext()) {
+			Tile t = tileIterator.next();
+			if (removeRows) {
+				if (removeAbove) {
+					if (t.getZ().y - 25 < removeY) {
+						tileIterator.remove();
+						continue;
+					}
+				}
+				else {
+					if (t.getZ().y - 25 > removeY) {
+						tileIterator.remove();
+						continue;
+					}
+				}
+			}
+			t.update(delta, delta_pos);
 		}		
 	}
 
@@ -89,6 +137,20 @@ public class TileManager implements Drawable {
 	@Override
 	public Pair getZ() {
 		return new Pair(0, -100);
+	}
+
+	public Tile[] mouseClick(int mouseX, int mouseY) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void mouseHover(Graphics g, int mouseX, int mouseY) {
+		for (Tile t : tileList) {
+			if (t.pointIsInside(mouseX, mouseY)) {
+				System.out.println("Kos");
+				t.mouseHover(g);
+			}
+		}
 	}
 
 	

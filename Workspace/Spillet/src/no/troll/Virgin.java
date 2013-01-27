@@ -35,8 +35,9 @@ public class Virgin implements Drawable {
 	private int angle = 45;
 	private SoundManager Lyd; 
 
+	boolean oldMoseState;
+	
 	private Brick lastCollisionBrick;
-
 
 	private int timePerSpriteLoop; // in msec
 	private int deltaTimeSpriteLoop; // in msec
@@ -52,9 +53,15 @@ public class Virgin implements Drawable {
 
 	private MoveDirection currentMoveDirection;
 	private int currentSpriteFrame;
+	
+	private TileManager tileManager;
+	private Graphics ggg;
+
 	private int currentAnimationSpriteFrame;
 
-	public Virgin(Resources resources, int posX, int posY, int[] freeZone, ArrayList<Brick> fixedObjects) {
+
+	public Virgin(Resources resources, int posX, int posY, int[] freeZone, ArrayList<Brick> fixedObjects, TileManager tileManager) {
+		this.tileManager = tileManager;
 		this.resources = resources;
 		this.fixedObjects = fixedObjects;
 		this.images = new HashMap<Virgin.MoveDirection, Image[]>();
@@ -66,6 +73,11 @@ public class Virgin implements Drawable {
 		currentSpriteFrame = 0;
 		timePerSpriteLoop = 500;
 		deltaTimeSpriteLoop = 0;
+
+		oldMoseState = false;
+		addImages();
+		
+		ggg = null;
 
 		lastWeaponState = false;
 		currentAnimation = Animation.NONE;
@@ -164,7 +176,9 @@ public class Virgin implements Drawable {
 	public void draw(Graphics g) {
 
 		//		g.drawImage(image, getScreenPos().x, getScreenPos().y);
-
+		if (ggg != null) {
+			ggg = g;
+		}
 
 		drawTileLines(g);
 		//		System.out.println("Koza: " + currentMoveDirection + " " + currentSpriteFrame);
@@ -244,6 +258,9 @@ public class Virgin implements Drawable {
 	}
 	
 	public Pair update(int delta, Input input) {
+		if (ggg != null) {
+			testMus(ggg, input);
+		}
 		int pixels_per_sec = 150;
 		double time = (double)delta / 1000;
 		double pixels = time * pixels_per_sec;
@@ -470,6 +487,26 @@ public class Virgin implements Drawable {
 		}
 
 		return new Pair(correctX, correctY);
+	}
+	
+	private void testMus(Graphics g, Input input) {
+		boolean newMouseState = input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
+		int mx = input.getMouseX();
+		int my = input.getMouseY();
+		mouseHover(g, mx, my);
+		if (!oldMoseState && newMouseState) {
+			mouseClick(g, mx, my);
+		}
+		oldMoseState = newMouseState;
+	}
+
+	private void mouseClick(Graphics g, int mouseX, int mouseY) {
+		Tile[] tiles = tileManager.mouseClick(mouseX, mouseY);
+	}
+	
+	private void mouseHover(Graphics g, int mouseX, int mouseY) {
+		System.out.println("Ko");
+		tileManager.mouseHover(g, mouseX, mouseY);
 	}
 
 	private void translatePolygon(int moveX, int moveY) {
