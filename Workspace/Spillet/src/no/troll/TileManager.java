@@ -47,6 +47,7 @@ public class TileManager implements Drawable {
 //		addTileGrid(-50, 50, columns, rows, tileWidth, tileHeight);
 		addTileGrid(topX, topY, columns, rows, tileWidth, tileHeight);
 	}
+
 	
 	public void addTile(int x, int y) {
 		Image i = resources.getRandomTileImage();
@@ -101,7 +102,7 @@ public class TileManager implements Drawable {
 				movedY -= numerOfNewRows * 25;
 			}
 			else {
-				//Slette på toppen
+				//Slette paa toppen
 				//Legge til i bunn
 				addTileGrid(topX, topY + rows * 25, columns, numerOfNewRows, tileWidth, tileHeight);
 				topY += numerOfNewRows * 25;
@@ -152,6 +153,12 @@ public class TileManager implements Drawable {
 				t.mouseHover();
 			}
 		}
+	}
+
+	@Override
+	public void onWalk() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

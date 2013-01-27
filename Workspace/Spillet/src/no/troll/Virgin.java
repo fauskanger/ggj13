@@ -559,6 +559,14 @@ public class Virgin implements Drawable {
 		return false;
 	}
 
+	@Override
+	public void onWalk() {
+		// TODO Auto-generated method stub
+		
+		// Walking on Virgin
+		
+	}
+
 
 
 

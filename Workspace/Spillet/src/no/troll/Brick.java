@@ -47,6 +47,11 @@ public class Brick implements Drawable {
 		return new Pair(posX+image.getWidth()/2, posY + image.getHeight());
 	}
 
+	@Override
+	public void onWalk() {
+		System.out.println("You are walking on a brick tile!");
+	}
+
 
 	
 }

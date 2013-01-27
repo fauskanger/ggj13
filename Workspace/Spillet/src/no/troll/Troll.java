@@ -492,6 +492,12 @@ public class Troll implements Drawable {
 		return false;
 	}
 
+	@Override
+	public void onWalk() {
+		System.out.println("GAME OVER!!");
+		
+	}
+
 
 
 

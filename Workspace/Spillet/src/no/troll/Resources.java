@@ -81,6 +81,7 @@ public class Resources {
 
 		private TileImageName[] tileImageNames;
 		private BrickImageName[] brickImageNames;
+		private CharacterImageName[] characterImageNames;
 
 		private String base_path;
 
@@ -93,6 +94,7 @@ public class Resources {
 			brickSizes = new HashMap<Resources.BrickImageName, Integer>();
 			tileImageNames = TileImageName.values();
 			brickImageNames = BrickImageName.values();
+			characterImageNames = CharacterImageName.values();
 			attackImageMap = new HashMap<Resources.AttackImageName,Image>(); 
 			SoundMap = new HashMap<Resources.SoundName,Sound>();
 
@@ -102,7 +104,23 @@ public class Resources {
 			loadCharacters();
 			loadAttack();
 		}
-
+		
+		public Drawable getRandomDrawable() {
+			int tileImageNamesWeight = tileImageNames.length;
+			int brickImageNamesWeight = brickImageNames.length;
+			int characterImageNamesWeight = characterImageNames.length;
+			
+			
+			int random = (int) (Math.random()*(
+								tileImageNames.length+
+								brickImageNames.length+
+								characterImageNames.length
+								));
+			
+			
+			return null;
+		}
+		
 		private void loadAttack() {
 			addAtt("Angrip01.png",AttackImageName.att_1 );
 			addAtt("Angrip02.png",AttackImageName.att_2 );

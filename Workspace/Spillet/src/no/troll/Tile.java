@@ -70,4 +70,12 @@ public class Tile implements Drawable {
 		return new Pair(posX, posY + image.getHeight());
 	}
 
+	@Override
+	public void onWalk() {
+		// TODO Auto-generated method stub
+		
+		// Walking on a tile
+		
+	}
+
 }

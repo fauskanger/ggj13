@@ -7,4 +7,5 @@ public interface Drawable {
 	public void update(int delta, Pair delta_pos);
 	public void updatePosition(int delta_x, int delta_y);
 	public Pair getZ();
+	public void onWalk();
 }
