@@ -42,14 +42,17 @@ public class Resources {
 									 Virgin_DOWNRIGHT_2,
 									 Virgin_DOWNRIGHT_3,
 									 Troll };
-
-	public enum SoundName {Theme,Sword};
+									 
+	public enum AttackImageName{att_1,att_2,att_3,att_rot1,att_rot2,att_rot3};
+	
+	public enum SoundName {Theme,Sword,Hit};
 
 	private HashMap<SoundName,Sound> SoundMap;
 	private HashMap<TileImageName, Image> tileImageMap;
 	private HashMap<BrickImageName, Image> brickImageMap;
 	private HashMap<BrickImageName, Integer> brickSizes;
 	private HashMap<CharacterImageName, Image> characterImageMap;
+	private HashMap<AttackImageName,Image> attackImageMap;
 	
 	private TileImageName[] tileImageNames;
 	private BrickImageName[] brickImageNames;
@@ -65,19 +68,43 @@ public class Resources {
 		brickSizes = new HashMap<Resources.BrickImageName, Integer>();
 		tileImageNames = TileImageName.values();
 		brickImageNames = BrickImageName.values();
+		attackImageMap = new HashMap<Resources.AttackImageName,Image>(); 
 		SoundMap = new HashMap<Resources.SoundName,Sound>();
 
 		loadSound();
 		loadTiles();
 		loadBricks();
 		loadCharacters();
+		loadAttack();
 	}
 	
+	private void loadAttack() {
+		addAtt("Angrip01.png",AttackImageName.att_1 );
+		addAtt("Angrip02.png",AttackImageName.att_2 );
+		addAtt("Angrip03.png",AttackImageName.att_3 );
+		addAtt("Angrip_rot1.png",AttackImageName.att_rot1);
+		addAtt("Angrip_rot2.png",AttackImageName.att_rot2);
+		addAtt("Angrip_rot3.png",AttackImageName.att_rot3);
+
+	}
+
+	private void addAtt(String fileName, AttackImageName AttName) 
+	{
+		String location = base_path + "img/attack/" + fileName;
+		try {
+			attackImageMap.put(AttName, new Image(location));
+		} catch (SlickException e) {
+			e.printStackTrace();
+			System.out.println("ERROR: no image at location: " + location);
+		}	
+		
+	}
+
 	private void loadSound() 
 	{	
 		addSound("GGJ13_Theme.wav",SoundName.Theme);
 		addSound("Sword.wav",SoundName.Sword);
-		
+		addSound("Hit.wav", SoundName.Hit);
 	}
 
 	
@@ -201,6 +228,9 @@ public class Resources {
 		return characterImageMap.get(imageName);
 	}
 	
-	
+	public Image getAttackImage(AttackImageName attName)
+	{
+		return attackImageMap.get(attName);
+	}
 
 }
