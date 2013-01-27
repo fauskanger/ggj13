@@ -30,7 +30,7 @@ public class Virgin implements Drawable {
 
 	private boolean attack = false; 
 	private SoundManager Lyd; 
-	
+
 	private Brick lastCollisionBrick;
 
 
@@ -41,7 +41,7 @@ public class Virgin implements Drawable {
 	private int freeZoneRight;
 	private int freeZoneBottom;
 	private int freeZoneLeft;
-	
+
 	private Polygon shape;
 
 	private MoveDirection currentMoveDirection;
@@ -59,9 +59,9 @@ public class Virgin implements Drawable {
 		currentSpriteFrame = 0;
 		timePerSpriteLoop = 500;
 		deltaTimeSpriteLoop = 0;
-		
+
 		addImages();
-		
+
 		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
 		int topY = bottomY - Program.tileHeight;
 		int leftY = bottomY - Program.tileHeight/2;
@@ -168,26 +168,26 @@ public class Virgin implements Drawable {
 	}
 
 
-//	private Pair getScreenPos() {
-//	    int retX = posX * (Program.tileWidth / 2) + posY * -Program.tileHeight;
-//	    int retY = posX * (Program.tileHeight / 2) + posY * (Program.tileHeight / 2); 		
-//		return new Pair(retX, retY);
-//		
-//	}
-	
+	//	private Pair getScreenPos() {
+	//	    int retX = posX * (Program.tileWidth / 2) + posY * -Program.tileHeight;
+	//	    int retY = posX * (Program.tileHeight / 2) + posY * (Program.tileHeight / 2); 		
+	//		return new Pair(retX, retY);
+	//		
+	//	}
+
 	public void attack(Input input)
 	{		
 		if(input.isKeyDown(Input.KEY_X))
 		{
 			attack = true;
-			
+
 			Sound att = resources.getSound(SoundName.Sword); 
 			if(!att.playing())
 			{
 				att.play(1.0f,0.2f);
 			}
 			//Bilde av angrep
-			
+
 		}
 	}
 
@@ -203,7 +203,7 @@ public class Virgin implements Drawable {
 		boolean moveRight = false;
 
 		attack(input);
-	
+
 		if (input.isKeyDown(Input.KEY_UP) && input.isKeyDown(Input.KEY_LEFT)) {
 			moveLeft = true;
 			buttons = 1;
@@ -277,13 +277,13 @@ public class Virgin implements Drawable {
 		int moveY = (int) delta_posY;
 		delta_posX -= moveX;
 		delta_posY -= moveY;
-		
+
 		updatePosition(moveX, moveY);
-		
+
 
 		int correctX = 0;
 		int correctY = 0;
-		
+
 		if (!collisionDetection(currentMoveDirection)) {			
 
 			if (posY < freeZoneTop) {
@@ -304,40 +304,97 @@ public class Virgin implements Drawable {
 		else
 		{
 			int dy,dx;
+			boolean isAboveMiddle, isRight;
+			boolean randomBool = (Math.random()>=0.5);
+			int count = 0;
 			while(collisionDetection(currentMoveDirection)) {
-				if(getZ().x > lastCollisionBrick.getZ().x) {
-
-					if (moveY==0) {
-						dy = (getZ().y > lastCollisionBrick.getZ().y)? 1:-1;
-						System.out.print("Horizontal ");
-					} else {
-						dy = (moveY>0)? 1:-1;
-						System.out.print((moveY>0)?"Downward ": "Upward");
-					}
-					dx = 1;
-					updatePosition(dx, dy);
-					System.out.println("Right side!");
-				}
-				else 
+				count++;
+				//if (count>100000) break;
+				isRight = (getZ().x > lastCollisionBrick.getZ().x);
+				isAboveMiddle = (getZ().y < lastCollisionBrick.getZ().y);
+				
+				if (isRight)
 				{
-
-					if (moveY==0) {
-						dy = (getZ().y > lastCollisionBrick.getZ().y)? 1:-1;
-						System.out.print("Horizontal ");
-					} else {
-						dy = (moveY>0)? 1:-1;
-						System.out.print((moveY>0)?"Downward ": "Upward");
+					switch (currentMoveDirection)
+					{
+					case UP:
+						dx = 1;
+						dy = 1;
+						break;
+					case DOWN:
+						dx = 1;
+						dy = -1;
+						break;
+					case DOWNLEFT:
+						dx = 1; 
+						dy = -1;
+						break;
+					case UPLEFT:
+						dx = 1; 
+						dy = 1;
+						break;
+					case LEFT:
+						if(isAboveMiddle) {
+							dx = 1;
+							dy = -1;
+						} else {
+							dx = 1;
+							dy = 1;
+						}
+						break;
+					default:
+						dx = moveX>0? 1:-1;
+						dy = moveY>0? 1:-1;
+						System.out.println("ERROR! Switch resulted in default on isRight collision " +  currentMoveDirection);
+//						System.exit(0);
+						break;
 					}
-					dx = -1;
-					updatePosition(dx, dy);
-					System.out.println("Left side!");
 				}
+				else // !isRight => isLeft
+				{
+					switch (currentMoveDirection)
+					{
+					case UP:
+						dx = -1;
+						dy = 1;
+						break;
+					case DOWN:
+						dx = -1;
+						dy = -1;
+						break;
+					case RIGHT:
+						if (isAboveMiddle) {
+							dx = -1;
+							dy = -1;
+						} else {
+							dx = -1;
+							dy = 1;
+						}
+						break;
+					case UPRIGHT:
+						dx = -1;
+						dy = 1;
+						break;
+					case DOWNRIGHT:
+						dx = -1;
+						dy = -1;
+						break;
+					default:
+						dx = moveX>0? 1:-1;
+						dy = moveY>0? 1:-1;
+						System.out.println("ERROR! Switch resulted in default on isLeft collision " + currentMoveDirection);
+//						System.exit(0);
+						break;
+					}
+				}
+
+				updatePosition(dx, dy);
 			}	
 		}
-	
+
 		return new Pair(correctX, correctY);
 	}
-	
+
 	private void translatePolygon(int moveX, int moveY) {
 		shape = (Polygon) shape.transform(Transform.createTranslateTransform(moveX, moveY));
 	}
