@@ -41,7 +41,32 @@ public class Resources {
 									 Virgin_DOWNRIGHT_1,
 									 Virgin_DOWNRIGHT_2,
 									 Virgin_DOWNRIGHT_3,
-									 Troll };
+
+									 Troll_LEFT_1,
+									 Troll_LEFT_2,
+									 Troll_LEFT_3, 
+									 Troll_RIGHT_1,
+									 Troll_RIGHT_2,
+									 Troll_RIGHT_3, 
+									 Troll_UP_1,
+									 Troll_UP_2,
+									 Troll_UP_3, 
+									 Troll_DOWN_1,
+									 Troll_DOWN_2,
+									 Troll_DOWN_3, 
+									 Troll_DOWNRIGHT_1,
+									 Troll_DOWNRIGHT_2,
+									 Troll_DOWNRIGHT_3, 
+									 Troll_UPRIGHT_1,
+									 Troll_UPRIGHT_2,
+									 Troll_UPRIGHT_3, 
+									 Troll_UPLEFT_1,
+									 Troll_UPLEFT_2,
+									 Troll_UPLEFT_3, 
+									 Troll_DOWNLEFT_1,
+									 Troll_DOWNLEFT_2,
+									 Troll_DOWNLEFT_3,
+									 Troll_STILL };
 
 	public enum SoundName {Theme,Sword};
 
@@ -110,7 +135,32 @@ public class Resources {
 	}
 
 	private void loadCharacters() {
-		addCharacter("Troll.png", CharacterImageName.Troll);
+		addCharacter("troll/downright1.png", CharacterImageName.Troll_DOWNRIGHT_1);
+		addCharacter("troll/downright2.png", CharacterImageName.Troll_DOWNRIGHT_2);
+		addCharacter("troll/downright3.png", CharacterImageName.Troll_DOWNRIGHT_3);
+		addCharacter("troll/upright1.png", CharacterImageName.Troll_UPRIGHT_1);
+		addCharacter("troll/upright2.png", CharacterImageName.Troll_UPRIGHT_2);
+		addCharacter("troll/upright3.png", CharacterImageName.Troll_UPRIGHT_3);
+		addCharacter("troll/downleft1.png", CharacterImageName.Troll_DOWNLEFT_1);
+		addCharacter("troll/downleft2.png", CharacterImageName.Troll_DOWNLEFT_2);
+		addCharacter("troll/downleft3.png", CharacterImageName.Troll_DOWNLEFT_3);
+		addCharacter("troll/upleft1.png", CharacterImageName.Troll_UPLEFT_1);
+		addCharacter("troll/upleft2.png", CharacterImageName.Troll_UPLEFT_2);
+		addCharacter("troll/upleft3.png", CharacterImageName.Troll_UPLEFT_3);
+		addCharacter("troll/downright1.png", CharacterImageName.Troll_UP_1);
+		addCharacter("troll/downright2.png", CharacterImageName.Troll_UP_2);
+		addCharacter("troll/downright3.png", CharacterImageName.Troll_UP_3);
+		addCharacter("troll/downleft1.png", CharacterImageName.Troll_LEFT_1);
+		addCharacter("troll/downleft2.png", CharacterImageName.Troll_LEFT_2);
+		addCharacter("troll/downleft3.png", CharacterImageName.Troll_LEFT_3);
+		addCharacter("troll/downright1.png", CharacterImageName.Troll_DOWN_1);
+		addCharacter("troll/downright2.png", CharacterImageName.Troll_DOWN_2);
+		addCharacter("troll/downright3.png", CharacterImageName.Troll_DOWN_3);
+		addCharacter("troll/downright1.png", CharacterImageName.Troll_RIGHT_1);
+		addCharacter("troll/downright2.png", CharacterImageName.Troll_RIGHT_2);
+		addCharacter("troll/downright3.png", CharacterImageName.Troll_RIGHT_3);
+		addCharacter("troll/downright1.png", CharacterImageName.Troll_STILL);
+		
 		addCharacter("Virgin/DownLeft1.png", CharacterImageName.Virgin);
 		addCharacter("Virgin/DownLeft1.png", CharacterImageName.Virgin_DOWN_1);
 		addCharacter("Virgin/DownLeft2.png", CharacterImageName.Virgin_DOWN_2);
