@@ -9,6 +9,7 @@ import no.troll.Resources.CharacterImageName;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -44,6 +45,7 @@ public class Program extends BasicGame {
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException {
+		g.setBackground(new Color(98, 51, 0));
 		tileManager.draw(g);
 
 		Collections.sort(drawables, new Comparator<Drawable>() {
