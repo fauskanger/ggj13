@@ -28,6 +28,7 @@ public class Program extends BasicGame {
 	static final public int tileHeight = 50;
 
 	private Virgin virgin;
+	private Troll troll;
 	
 	private Resources resources;
 	private TileManager tileManager;
@@ -76,6 +77,10 @@ public class Program extends BasicGame {
 		bricks.add(wall);
 		drawables.add(fjell);
 		bricks.add(fjell);
+
+		troll = new Troll(resources, windowWidth/5, windowHeight/5, virgin, bricks);
+		drawables.add(troll);
+		mobs.add(troll);
 		noe = new SoundManager(resources); 
 	}
 
