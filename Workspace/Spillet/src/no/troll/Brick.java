@@ -44,7 +44,7 @@ public class Brick implements Drawable {
 	
 	@Override
 	public Pair getZ() {
-		return new Pair(posX, posY + image.getHeight());
+		return new Pair(posX+image.getWidth()/2, posY + image.getHeight());
 	}
 
 
