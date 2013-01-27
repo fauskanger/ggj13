@@ -3,6 +3,7 @@ package no.troll;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import no.troll.Resources.AttackImageName;
 import no.troll.Resources.CharacterImageName;
 import no.troll.Resources.SoundName;
 
@@ -16,25 +17,30 @@ import org.newdawn.slick.geom.Transform;
 
 public class Virgin implements Drawable {
 
-	private enum MoveDirection {UP, DOWN, LEFT, RIGHT, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT, STILL};
+	private enum MoveDirection { UP, DOWN, LEFT, RIGHT, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT, STILL };
+	private enum Animation { NONE, WEAPON }
 
 	private int posX;
 	private int posY;
 	private double delta_posX;
 	private double delta_posY; 
-
+	private boolean lastWeaponState;
 	private ArrayList<Brick> fixedObjects;
 
 	private HashMap<MoveDirection, Image[]> images;	
+	private HashMap<Animation, Image[]> animations;
 	private Resources resources;
 
-	private boolean attack = false; 
+	private Animation currentAnimation;
+	private int angle = 45;
 	private SoundManager Lyd; 
 
 
 	private int timePerSpriteLoop; // in msec
 	private int deltaTimeSpriteLoop; // in msec
-
+	private int animPerSpriteLoop;
+	private int animTimeSpriteLoop;
+	
 	private int freeZoneTop;
 	private int freeZoneRight;
 	private int freeZoneBottom;
@@ -44,6 +50,7 @@ public class Virgin implements Drawable {
 
 	private MoveDirection currentMoveDirection;
 	private int currentSpriteFrame;
+	private int currentAnimationSpriteFrame;
 
 	public Virgin(Resources resources, int posX, int posY, int[] freeZone, ArrayList<Brick> fixedObjects) {
 		this.resources = resources;
@@ -57,7 +64,11 @@ public class Virgin implements Drawable {
 		currentSpriteFrame = 0;
 		timePerSpriteLoop = 500;
 		deltaTimeSpriteLoop = 0;
+		lastWeaponState = false;
+		currentAnimation = Animation.NONE;
+		animations = new HashMap<Virgin.Animation, Image[]>();
 		
+		AddAnimationImages();
 		addImages();
 		
 		int bottomY = posY + images.get(MoveDirection.STILL)[0].getHeight();
@@ -80,6 +91,17 @@ public class Virgin implements Drawable {
 		freeZoneRight = freeZone[1];
 		freeZoneBottom = freeZone[2];
 		freeZoneLeft = freeZone[3];
+	}
+	
+	private void AddAnimationImages() {
+		Image[] arry = new Image[1];
+		arry[0] = resources.getAttackImage(AttackImageName.att_1);
+		animations.put(Animation.NONE, arry);
+		arry = new Image[3];
+		arry[0] = resources.getAttackImage(AttackImageName.att_rot1);
+		arry[1] = resources.getAttackImage(AttackImageName.att_rot2);
+		arry[2] = resources.getAttackImage(AttackImageName.att_rot3);
+		animations.put(Animation.WEAPON, arry);
 	}
 
 	private void addImages() {
@@ -146,14 +168,46 @@ public class Virgin implements Drawable {
 
 		Image i = images.get(currentMoveDirection)[currentSpriteFrame];
 		g.drawImage(i, posX-25, posY+10);
+		
+		if(currentAnimation!=Animation.NONE)
+		{
+			Image a = animations.get(currentAnimation)[currentAnimationSpriteFrame];
+			Pair rotasjon = rotasjon(); 
+			a.rotate(rotasjon.x);
+			g.drawImage(a,getZ().x-a.getWidth()+rotasjon.y,getZ().y-a.getHeight()); 
+			a.rotate(-rotasjon.x);
+		}
 
 		//g.drawImage(image, posX, posY);
+	}
+	
+	public Pair rotasjon()
+	{
+		switch(currentMoveDirection)
+		{
+		case UP: 
+		return new Pair(0,20);
+		case DOWN:
+			return new Pair(180,3);
+		case DOWNRIGHT:
+			return new Pair(-135,3);
+		case DOWNLEFT:
+			return new Pair(45,3);
+		case LEFT:
+			return new Pair(90,3);
+		case UPLEFT:
+			return new Pair(135,3);
+		case UPRIGHT:
+			return new Pair(-45,3);
+		}
+		return new Pair(0,0);
 	}
 
 	private void drawTileLines(Graphics g) {
 		g.draw(shape);
 	}
-
+	
+	
 	@Override
 	public void updatePosition(int delta_x, int delta_y) {
 		this.posX += delta_x;
@@ -172,23 +226,26 @@ public class Virgin implements Drawable {
 //		return new Pair(retX, retY);
 //		
 //	}
-	
+
 	public void attack(Input input)
 	{		
-		if(input.isKeyDown(Input.KEY_X))
-		{
-			attack = true;
-			
+		boolean currentWeaponState= input.isKeyDown(Input.KEY_X);
+		
+		if(currentWeaponState&&!lastWeaponState)
+		{			
 			Sound att = resources.getSound(SoundName.Sword); 
 			if(!att.playing())
 			{
 				att.play(1.0f,0.2f);
-			}
-			//Bilde av angrep
 			
+			}
+			
+			currentAnimation = Animation.WEAPON;
+						
 		}
+		lastWeaponState = currentWeaponState;
 	}
-
+	
 	public Pair update(int delta, Input input) {
 		int pixels_per_sec = 150;
 		double time = (double)delta / 1000;
@@ -199,6 +256,7 @@ public class Virgin implements Drawable {
 		boolean moveDown = false;
 		boolean moveLeft = false;
 		boolean moveRight = false;
+		boolean attack = false;
 
 		attack(input);
 	
@@ -218,8 +276,10 @@ public class Virgin implements Drawable {
 			moveRight = true;
 			buttons++;
 		}
-
-		currentMoveDirection = getCurrentMoveDirection(moveUp, moveDown, moveLeft, moveRight);
+		if(input.isKeyDown(Input.KEY_X))
+			attack = true;
+		
+		currentMoveDirection = getCurrentMoveDirection(moveUp, moveDown, moveLeft, moveRight,attack);
 		int numberOfSpriteElements = images.get(currentMoveDirection).length;
 		deltaTimeSpriteLoop += delta;
 		if (deltaTimeSpriteLoop > timePerSpriteLoop / numberOfSpriteElements) {
@@ -228,6 +288,17 @@ public class Virgin implements Drawable {
 		}
 		currentSpriteFrame %= numberOfSpriteElements;
 
+		numberOfSpriteElements = animations.get(currentAnimation).length;
+		animTimeSpriteLoop += delta;
+		if(animTimeSpriteLoop>animPerSpriteLoop/numberOfSpriteElements){
+			currentAnimationSpriteFrame = (currentAnimationSpriteFrame +1);
+			animTimeSpriteLoop -= animPerSpriteLoop/numberOfSpriteElements;
+		}
+		if(currentAnimationSpriteFrame==numberOfSpriteElements)
+		{currentAnimation=Animation.NONE;
+		currentAnimationSpriteFrame=0;
+		}
+		
 		if (buttons > 1) {
 			if (moveDown == moveLeft) { //Moving left/right
 				pixels *= 0.6;
@@ -300,7 +371,7 @@ public class Virgin implements Drawable {
 		shape = (Polygon) shape.transform(Transform.createTranslateTransform(moveX, moveY));
 	}
 
-	private MoveDirection getCurrentMoveDirection(boolean moveUp, boolean moveDown,	boolean moveLeft, boolean moveRight) {
+	private MoveDirection getCurrentMoveDirection(boolean moveUp, boolean moveDown,	boolean moveLeft, boolean moveRight,boolean attack) {
 		if (moveUp && moveLeft) {
 			return MoveDirection.UP;
 		}
@@ -325,12 +396,13 @@ public class Virgin implements Drawable {
 		else if (moveLeft) {
 			return MoveDirection.UPLEFT;
 		}
+			
 		return MoveDirection.STILL;
 	}
 
 	@Override
 	public Pair getZ() {
-		return new Pair(posX, posY + images.get(MoveDirection.STILL)[0].getHeight());
+		return new Pair(posX+50, posY-25 + images.get(MoveDirection.STILL)[0].getHeight());
 	}
 
 	boolean collisionDetection(MoveDirection moveDirection) {

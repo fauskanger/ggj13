@@ -1,9 +1,7 @@
 package no.troll;
 
-import java.util.ArrayList;
-import no.troll.Resources.SoundName;
 
-import org.newdawn.slick.Input;
+import no.troll.Resources.SoundName;
 import org.newdawn.slick.Sound;
 
 public class SoundManager 
