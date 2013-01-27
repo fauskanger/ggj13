@@ -306,12 +306,21 @@ public class Virgin implements Drawable {
 			int dy,dx;
 			boolean isAboveMiddle, isRight;
 			boolean randomBool = (Math.random()>=0.5);
-			int count = 0;
+			
+			boolean previousIsAboveMiddle;
+			boolean previousIsRight;
+			
+
+			previousIsRight = isRight = (getZ().x > lastCollisionBrick.getZ().x);
+			previousIsAboveMiddle = isAboveMiddle = (getZ().y < lastCollisionBrick.getZ().y);
+			
 			while(collisionDetection(currentMoveDirection)) {
-				count++;
-				//if (count>100000) break;
+				
 				isRight = (getZ().x > lastCollisionBrick.getZ().x);
 				isAboveMiddle = (getZ().y < lastCollisionBrick.getZ().y);
+				
+				if (isRight!=previousIsRight || isAboveMiddle!=previousIsAboveMiddle)
+					break;
 				
 				if (isRight)
 				{
@@ -389,6 +398,8 @@ public class Virgin implements Drawable {
 				}
 
 				updatePosition(dx, dy);
+				previousIsAboveMiddle = isAboveMiddle;
+				previousIsRight = isRight;
 			}	
 		}
 
