@@ -12,14 +12,15 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Polygon;
 
 public class Program extends BasicGame {
 
-	static private final int windowWidth = 1024;
-	static private final int windowHeight = 768;
-	static private final int freeZoneTop = 300;
-	static private final int freeZoneLeft = 200;
-	static private final int freeZoneRight = windowWidth - 250;
+	static public final int windowWidth = 1024;
+	static public final int windowHeight = 768;
+	static private final int freeZoneTop = 100;
+	static private final int freeZoneLeft = -100;
+	static private final int freeZoneRight = windowWidth;
 	static private final int freeZoneBottom = windowHeight - 350;
 
 	
@@ -88,6 +89,12 @@ public class Program extends BasicGame {
 	}
 	
 	public static void main(String[] args) throws SlickException {
+//		Polygon s = new Polygon();
+//		s.addPoint(-10, 10);
+//		s.addPoint(10, 10);
+//		s.addPoint(10, -10);
+//		s.addPoint(-10, -10);
+//		System.out.println(s.contains(4, 2));
 		AppGameContainer app = new AppGameContainer(new Program());		 
 		app.setDisplayMode(windowWidth, windowHeight, false);
 		app.setTargetFrameRate(60);

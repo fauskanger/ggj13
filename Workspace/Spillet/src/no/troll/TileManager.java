@@ -40,12 +40,12 @@ public class TileManager implements Drawable {
 //		int tileRows = (windowHeight / tileHeight + 1) * 2;
 		movedX = 0;
 		movedY = 0;
-		columns = 60;
-		rows = 100;
-		topX = 200;
-		topY = 400;
-		addTileGrid(-50, -25, columns, rows, tileWidth, tileHeight);
-//		addTileGrid(topX, topY, columns, rows, tileWidth, tileHeight);
+		columns = 12;
+		rows = 38;
+		topX = -100;
+		topY = -100;
+//		addTileGrid(-50, 50, columns, rows, tileWidth, tileHeight);
+		addTileGrid(topX, topY, columns, rows, tileWidth, tileHeight);
 	}
 	
 	public void addTile(int x, int y) {
@@ -92,23 +92,25 @@ public class TileManager implements Drawable {
 		boolean removeRows = false;
 		boolean removeAbove = false;
 		int removeY = 0;
-//		
-//		if (Math.abs(movedY) > numerOfNewRows * 25) {
-//			if (movedY > 0) {
-//				topY -= numerOfNewRows * 25;
-//				addTileGrid(topX, topY, columns, numerOfNewRows, tileWidth, tileHeight);
-//				removeY = topY + rows * 25;
-//				movedY -= numerOfNewRows * 25;
-//			}
-//			else {
-//				topY += numerOfNewRows * 25;
-//				addTileGrid(topX, topY + columns * 25, columns, numerOfNewRows, tileWidth, tileHeight);
-//				removeY = topY + numerOfNewRows * 25;
-//				removeAbove = true;
-//				movedY += numerOfNewRows * 25;
-//			}
-//			removeRows = true;
-//		}
+		
+		if (Math.abs(movedY) > numerOfNewRows * 25) {
+			if (movedY > 0) {
+				topY -= numerOfNewRows * 25;
+				addTileGrid(topX, topY, columns, numerOfNewRows, tileWidth, tileHeight);
+				removeY = topY + rows * 25;
+				movedY -= numerOfNewRows * 25;
+			}
+			else {
+				//Slette på toppen
+				//Legge til i bunn
+				addTileGrid(topX, topY + rows * 25, columns, numerOfNewRows, tileWidth, tileHeight);
+				topY += numerOfNewRows * 25;
+				removeY = topY + (numerOfNewRows - 2) * 25;
+				removeAbove = true;
+				movedY += numerOfNewRows * 25;
+			}
+			removeRows = true;
+		}
 		Iterator<Tile> tileIterator = tileList.iterator(); 
 		while (tileIterator.hasNext()) {
 			Tile t = tileIterator.next();
@@ -144,11 +146,10 @@ public class TileManager implements Drawable {
 		return null;
 	}
 
-	public void mouseHover(Graphics g, int mouseX, int mouseY) {
+	public void mouseHover(int mouseX, int mouseY) {
 		for (Tile t : tileList) {
 			if (t.pointIsInside(mouseX, mouseY)) {
-				System.out.println("Kos");
-				t.mouseHover(g);
+				t.mouseHover();
 			}
 		}
 	}

@@ -258,9 +258,7 @@ public class Virgin implements Drawable {
 	}
 	
 	public Pair update(int delta, Input input) {
-		if (ggg != null) {
-			testMus(ggg, input);
-		}
+		testMus(input);
 		int pixels_per_sec = 150;
 		double time = (double)delta / 1000;
 		double pixels = time * pixels_per_sec;
@@ -363,29 +361,18 @@ public class Virgin implements Drawable {
 
 		updatePosition(moveX, moveY);
 
+		if (posX < 0) {
+			updatePosition(-posX, 0);
+		}
+		if (posX > Program.windowWidth - 100) {
+			updatePosition(Program.windowWidth - 100 - posX, 0);
+		}
 
 		int correctX = 0;
 		int correctY = 0;
 
-		if (!collisionDetection(currentMoveDirection)) {			
+		if (collisionDetection(currentMoveDirection)) {			
 
-			if (posY < freeZoneTop) {
-				correctY = freeZoneTop - posY;
-			}
-			if (posY > freeZoneBottom) {
-				correctY = freeZoneBottom - posY;
-			}
-			if (posX < freeZoneLeft) {
-				correctX = freeZoneLeft - posX;
-			}
-			if (posX > freeZoneRight) {
-				correctX = freeZoneRight - posX;
-			}
-
-			updatePosition(correctX, correctY);
-		}
-		else
-		{
 			int dy,dx;
 			boolean isAboveMiddle, isRight;
 			boolean randomBool = (Math.random()>=0.5);
@@ -486,27 +473,42 @@ public class Virgin implements Drawable {
 			}	
 		}
 
+		if (posY < freeZoneTop) {
+			correctY = freeZoneTop - posY;
+		}
+		if (posY > freeZoneBottom) {
+			correctY = freeZoneBottom - posY;
+		}
+		if (posX < freeZoneLeft) {
+			correctX = freeZoneLeft - posX;
+		}
+		if (posX > freeZoneRight) {
+			correctX = freeZoneRight - posX;
+		}
+
+		updatePosition(correctX, correctY);
+
+		
 		return new Pair(correctX, correctY);
 	}
 	
-	private void testMus(Graphics g, Input input) {
+	private void testMus(Input input) {
 		boolean newMouseState = input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
 		int mx = input.getMouseX();
 		int my = input.getMouseY();
-		mouseHover(g, mx, my);
+		mouseHover(mx, my);
 		if (!oldMoseState && newMouseState) {
-			mouseClick(g, mx, my);
+			mouseClick(mx, my);
 		}
 		oldMoseState = newMouseState;
 	}
 
-	private void mouseClick(Graphics g, int mouseX, int mouseY) {
+	private void mouseClick(int mouseX, int mouseY) {
 		Tile[] tiles = tileManager.mouseClick(mouseX, mouseY);
 	}
 	
-	private void mouseHover(Graphics g, int mouseX, int mouseY) {
-		System.out.println("Ko");
-		tileManager.mouseHover(g, mouseX, mouseY);
+	private void mouseHover(int mouseX, int mouseY) {
+		tileManager.mouseHover(mouseX, mouseY);
 	}
 
 	private void translatePolygon(int moveX, int moveY) {

@@ -11,7 +11,8 @@ public class Tile implements Drawable {
 	private int posX;
 	private int posY;
 	private Image image;
-	private Polygon shape;
+	public Polygon shape;
+	private boolean mouseHovering;
 	
 	public Tile(Image image, int posX, int posY) {
 		this.image = image;
@@ -22,18 +23,23 @@ public class Tile implements Drawable {
 		shape.addPoint(posX + 50, getZ().y - 50); 
 		shape.addPoint(posX + 100, getZ().y - 25);
 		shape.addPoint(posX + 50, getZ().y);
+		mouseHovering = false;
 	}
 	
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(image, posX, posY);
-		g.draw(shape);
+		//g.draw(shape);
+		if (mouseHovering) {
+			Color c = g.getColor();
+			g.setColor(new Color(255, 0, 0));
+			g.draw(shape);		g.setColor(c);
+			mouseHovering = false;
+		}
 	}
 
-	public void mouseHover(Graphics g) {
-		Color c = g.getColor();
-		g.setColor(new Color(255, 0, 0));
-		g.draw(shape);		g.setColor(c);
+	public void mouseHover() {
+		mouseHovering = true;
 	}
 
 	public void onTheWay(Graphics g) {
@@ -44,7 +50,7 @@ public class Tile implements Drawable {
 	}
 
 	public boolean pointIsInside(int x, int y) {
-		return shape.includes(x,  y);
+		return shape.contains(x, y);
 	}
 	
 	@Override
